@@ -1,0 +1,77 @@
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: inventory_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB:       ${DB_NAME:-inventory_db}
+      POSTGRES_USER:     ${DB_USER:-inventory_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-inventory_pass}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-inventory_user} -d ${DB_NAME:-inventory_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - inventory_net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: inventory_backend
+    restart: unless-stopped
+    environment:
+      DB_HOST:               postgres
+      DB_PORT:               5432
+      DB_NAME:               ${DB_NAME:-inventory_db}
+      DB_USER:               ${DB_USER:-inventory_user}
+      DB_PASSWORD:           ${DB_PASSWORD:-inventory_pass}
+      JWT_SECRET:            ${JWT_SECRET:-404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
+      JWT_ACCESS_EXPIRATION: ${JWT_ACCESS_EXPIRATION:-900000}
+      JWT_REFRESH_EXPIRATION: ${JWT_REFRESH_EXPIRATION:-604800000}
+      CORS_ORIGINS:          ${CORS_ORIGINS:-http://localhost,http://frontend}
+      LOG_LEVEL:             ${LOG_LEVEL:-INFO}
+      SERVER_PORT:           8080
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - backend_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/api/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 90s
+      retries: 5
+    networks:
+      - inventory_net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: inventory_frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-80}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - inventory_net
+
+volumes:
+  postgres_data:
+  backend_logs:
+
+networks:
+  inventory_net:
+    driver: bridge
