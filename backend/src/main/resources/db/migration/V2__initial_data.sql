@@ -21,7 +21,7 @@ INSERT INTO product_categories (name, description) VALUES
 INSERT INTO users (name, last_name, email, password, role_id, active)
 SELECT 'Admin', 'Sistema',
        'admin@inventory.com',
-       '$2a$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2uheWG/igi.',
+       '$2a$12$dMIg/wlW4HeBGVKsz2z1mu8FIHaEUHqtOTeFX5Wvw/2w//9FiQ6wu',
        r.id, TRUE
 FROM roles r WHERE r.name = 'ADMIN';
 
