@@ -33,7 +33,7 @@ public class TransferRequest {
     private BigDecimal quantity;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "transfer_status")
+    @Column(nullable = false, length = 50)
     @Builder.Default
     private TransferStatus status = TransferStatus.PENDIENTE;
 

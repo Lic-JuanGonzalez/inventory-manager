@@ -19,11 +19,11 @@ public class InventoryMovement {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "movement_type")
+    @Column(nullable = false, length = 50)
     private MovementType type;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "movement_reason")
+    @Column(nullable = false, length = 50)
     private MovementReason reason;
 
     @Column(nullable = false, precision = 15, scale = 3)
