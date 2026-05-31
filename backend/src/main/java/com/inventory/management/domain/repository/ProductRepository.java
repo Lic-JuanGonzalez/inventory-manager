@@ -18,7 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("""
             SELECT p FROM Product p
             LEFT JOIN FETCH p.category c
-            WHERE (:search IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%',:search,'%'))
+            WHERE ('' = :search OR LOWER(p.name) LIKE LOWER(CONCAT('%',:search,'%'))
                    OR LOWER(p.sku) LIKE LOWER(CONCAT('%',:search,'%')))
             AND (:categoryId IS NULL OR c.id = :categoryId)
             AND (:active IS NULL OR p.active = :active)

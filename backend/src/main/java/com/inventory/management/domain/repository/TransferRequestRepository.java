@@ -24,12 +24,12 @@ public interface TransferRequestRepository extends JpaRepository<TransferRequest
             JOIN FETCH t.destinationBranch
             JOIN FETCH t.product
             JOIN FETCH t.requestedBy
-            WHERE (:status IS NULL OR t.status = :status)
+            WHERE ('' = :status OR t.status = :status)
             AND (:originBranchId IS NULL OR t.originBranch.id = :originBranchId)
             AND (:destinationBranchId IS NULL OR t.destinationBranch.id = :destinationBranchId)
             AND (:productId IS NULL OR t.product.id = :productId)
             """)
-    Page<TransferRequest> findAllFiltered(@Param("status") TransferStatus status,
+    Page<TransferRequest> findAllFiltered(@Param("status") String status,
                                           @Param("originBranchId") Long originBranchId,
                                           @Param("destinationBranchId") Long destinationBranchId,
                                           @Param("productId") Long productId,

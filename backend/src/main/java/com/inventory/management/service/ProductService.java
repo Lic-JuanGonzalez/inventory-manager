@@ -27,7 +27,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public PageResponse<ProductResponse> findAll(String search, Long categoryId, Boolean active, Pageable pageable) {
         return PageResponse.of(
-                productRepository.findAllFiltered(search, categoryId, active, pageable).map(this::toResponse)
+                productRepository.findAllFiltered(search == null ? "" : search, categoryId, active, pageable).map(this::toResponse)
         );
     }
 

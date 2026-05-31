@@ -70,7 +70,10 @@ public class AuditService {
     public PageResponse<AuditLogResponse> findAll(Long userId, String action, String entity,
                                                   Instant from, Instant to, Pageable pageable) {
         return PageResponse.of(
-                auditLogRepository.findAllFiltered(userId, action, entity, from, to, pageable)
+                auditLogRepository.findAllFiltered(userId,
+                        action == null ? "" : action,
+                        entity == null ? "" : entity,
+                        from, to, pageable)
                         .map(this::toResponse)
         );
     }

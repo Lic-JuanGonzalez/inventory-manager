@@ -1,7 +1,6 @@
 package com.inventory.management.domain.repository;
 
 import com.inventory.management.domain.entity.InventoryMovement;
-import com.inventory.management.domain.enums.MovementType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,14 +22,14 @@ public interface InventoryMovementRepository extends JpaRepository<InventoryMove
             WHERE (:branchId IS NULL OR m.branch.id = :branchId)
             AND (:productId IS NULL OR m.product.id = :productId)
             AND (:userId IS NULL OR m.user.id = :userId)
-            AND (:type IS NULL OR m.type = :type)
+            AND ('' = :type OR m.type = :type)
             AND (:from IS NULL OR m.createdAt >= :from)
             AND (:to IS NULL OR m.createdAt <= :to)
             """)
     Page<InventoryMovement> findAllFiltered(@Param("branchId") Long branchId,
                                             @Param("productId") Long productId,
                                             @Param("userId") Long userId,
-                                            @Param("type") MovementType type,
+                                            @Param("type") String type,
                                             @Param("from") Instant from,
                                             @Param("to") Instant to,
                                             Pageable pageable);

@@ -21,7 +21,7 @@ public interface BranchRepository extends JpaRepository<Branch, Long> {
 
     @Query("""
             SELECT b FROM Branch b
-            WHERE (:search IS NULL OR LOWER(b.name) LIKE LOWER(CONCAT('%',:search,'%'))
+            WHERE ('' = :search OR LOWER(b.name) LIKE LOWER(CONCAT('%',:search,'%'))
                    OR LOWER(b.address) LIKE LOWER(CONCAT('%',:search,'%')))
             AND (:active IS NULL OR b.active = :active)
             """)

@@ -34,7 +34,8 @@ public class TransferService {
                                                   Long destinationBranchId, Long productId,
                                                   Pageable pageable) {
         return PageResponse.of(
-                transferRepository.findAllFiltered(status, originBranchId, destinationBranchId, productId, pageable)
+                transferRepository.findAllFiltered(status == null ? "" : status.name(),
+                        originBranchId, destinationBranchId, productId, pageable)
                         .map(this::toResponse)
         );
     }

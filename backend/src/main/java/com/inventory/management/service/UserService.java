@@ -32,7 +32,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public PageResponse<UserResponse> findAll(String search, Boolean active, Pageable pageable) {
         return PageResponse.of(
-                userRepository.findAllFiltered(search, active, pageable).map(this::toResponse)
+                userRepository.findAllFiltered(search == null ? "" : search, active, pageable).map(this::toResponse)
         );
     }
 

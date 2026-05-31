@@ -17,8 +17,8 @@ public interface AuditLogRepository extends JpaRepository<AuditLog, Long> {
             SELECT a FROM AuditLog a
             LEFT JOIN FETCH a.user
             WHERE (:userId IS NULL OR a.user.id = :userId)
-            AND (:action IS NULL OR LOWER(a.action) LIKE LOWER(CONCAT('%',:action,'%')))
-            AND (:entity IS NULL OR a.entityName = :entity)
+            AND ('' = :action OR LOWER(a.action) LIKE LOWER(CONCAT('%',:action,'%')))
+            AND ('' = :entity OR a.entityName = :entity)
             AND (:from IS NULL OR a.createdAt >= :from)
             AND (:to IS NULL OR a.createdAt <= :to)
             """)

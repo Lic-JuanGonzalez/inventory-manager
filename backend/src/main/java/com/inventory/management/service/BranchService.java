@@ -26,7 +26,7 @@ public class BranchService {
     @Transactional(readOnly = true)
     public PageResponse<BranchResponse> findAll(String search, Boolean active, Pageable pageable) {
         return PageResponse.of(
-                branchRepository.findAllFiltered(search, active, pageable).map(this::toResponse)
+                branchRepository.findAllFiltered(search == null ? "" : search, active, pageable).map(this::toResponse)
         );
     }
 

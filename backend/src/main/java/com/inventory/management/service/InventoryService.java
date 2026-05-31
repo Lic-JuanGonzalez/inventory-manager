@@ -121,7 +121,8 @@ public class InventoryService {
                                                         MovementType type, Instant from, Instant to,
                                                         Pageable pageable) {
         return PageResponse.of(
-                movementRepository.findAllFiltered(branchId, productId, userId, type, from, to, pageable)
+                movementRepository.findAllFiltered(branchId, productId, userId,
+                        type == null ? "" : type.name(), from, to, pageable)
                         .map(this::toMovementResponse)
         );
     }
