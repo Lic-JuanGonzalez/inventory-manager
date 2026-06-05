@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-06-05
+
+### Fixed
+
+#### Backend
+- `GET /inventory/movements` returned 500 on all calls: replaced JPQL `@Query` with `JpaSpecificationExecutor` + `InventoryMovementSpecs` (Criteria API) to avoid Hibernate 6 / PostgreSQL null parameter type inference failure on enum and `Instant` filter params
+- `GET /transfers` returned 500 on all calls: same fix via `TransferRequestSpecs`
+- `GET /audit` returned 500 on all calls: same fix via `AuditLogSpecs`
+- Invalid `MovementReason` enum value in request body returned 500: added `HttpMessageNotReadableException` handler in `GlobalExceptionHandler` → now returns 400
+
+### Added
+
+#### Docs
+- Postman Collection v2.1 (`docs/api/inventory-api-collection.json`): 62 requests across 9 folders with automated test scripts, importable by Apidog
+  - Folders: Auth, Dashboard, Usuarios, Productos, Sucursales, Inventario, Transferencias, Auditoría, Seguridad
+  - Bearer token auth on all authenticated requests; `noauth` on login/refresh/logout
+  - `pm.environment.set()` for inter-step variable propagation (`accessToken`, `refreshToken`, `operatorToken`, `newUserId`, `newProductId`, `newBranchId`, `transferId`, `cancelTransferId`)
+
 ## [1.0.0] - 2026-05-31
 
 ### Added
