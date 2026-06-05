@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inventory.management.domain.entity.AuditLog;
 import com.inventory.management.domain.entity.User;
 import com.inventory.management.domain.repository.AuditLogRepository;
+import com.inventory.management.domain.repository.AuditLogSpecs;
 import com.inventory.management.dto.response.AuditLogResponse;
 import com.inventory.management.dto.response.PageResponse;
 import lombok.RequiredArgsConstructor;
@@ -70,10 +71,9 @@ public class AuditService {
     public PageResponse<AuditLogResponse> findAll(Long userId, String action, String entity,
                                                   Instant from, Instant to, Pageable pageable) {
         return PageResponse.of(
-                auditLogRepository.findAllFiltered(userId,
-                        action == null ? "" : action,
-                        entity == null ? "" : entity,
-                        from, to, pageable)
+                auditLogRepository.findAll(
+                        AuditLogSpecs.withFilters(userId, action, entity, from, to),
+                        pageable)
                         .map(this::toResponse)
         );
     }

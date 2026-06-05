@@ -3,6 +3,7 @@ package com.inventory.management.service;
 import com.inventory.management.domain.entity.*;
 import com.inventory.management.domain.enums.MovementType;
 import com.inventory.management.domain.repository.InventoryMovementRepository;
+import com.inventory.management.domain.repository.InventoryMovementSpecs;
 import com.inventory.management.domain.repository.InventoryRepository;
 import com.inventory.management.dto.request.InitInventoryRequest;
 import com.inventory.management.dto.request.InventoryMovementRequest;
@@ -121,8 +122,9 @@ public class InventoryService {
                                                         MovementType type, Instant from, Instant to,
                                                         Pageable pageable) {
         return PageResponse.of(
-                movementRepository.findAllFiltered(branchId, productId, userId,
-                        type == null ? "" : type.name(), from, to, pageable)
+                movementRepository.findAll(
+                        InventoryMovementSpecs.withFilters(branchId, productId, userId, type, from, to),
+                        pageable)
                         .map(this::toMovementResponse)
         );
     }

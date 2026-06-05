@@ -4,6 +4,7 @@ import com.inventory.management.domain.entity.*;
 import com.inventory.management.domain.enums.MovementReason;
 import com.inventory.management.domain.enums.TransferStatus;
 import com.inventory.management.domain.repository.TransferRequestRepository;
+import com.inventory.management.domain.repository.TransferRequestSpecs;
 import com.inventory.management.dto.request.CreateTransferRequest;
 import com.inventory.management.dto.response.PageResponse;
 import com.inventory.management.dto.response.TransferResponse;
@@ -34,8 +35,9 @@ public class TransferService {
                                                   Long destinationBranchId, Long productId,
                                                   Pageable pageable) {
         return PageResponse.of(
-                transferRepository.findAllFiltered(status == null ? "" : status.name(),
-                        originBranchId, destinationBranchId, productId, pageable)
+                transferRepository.findAll(
+                        TransferRequestSpecs.withFilters(status, originBranchId, destinationBranchId, productId),
+                        pageable)
                         .map(this::toResponse)
         );
     }

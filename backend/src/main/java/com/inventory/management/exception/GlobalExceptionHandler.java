@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -78,6 +79,16 @@ public class GlobalExceptionHandler {
         pd.setType(URI.create("urn:problem:access-denied"));
         pd.setProperty("timestamp", Instant.now());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(pd);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ProblemDetail> handleNotReadable(HttpMessageNotReadableException ex) {
+        ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        pd.setTitle("Malformed Request");
+        pd.setDetail("El cuerpo de la solicitud contiene valores inválidos");
+        pd.setType(URI.create("urn:problem:bad-request"));
+        pd.setProperty("timestamp", Instant.now());
+        return ResponseEntity.badRequest().body(pd);
     }
 
     @ExceptionHandler(Exception.class)
