@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Tag(name = "Authentication", description = "Endpoints de autenticación y tokens")
+@Tag(name = "Authentication", description = "Authentication and token endpoints")
 public class AuthController {
 
     private final AuthService authService;
 
     @PostMapping("/login")
-    @Operation(summary = "Iniciar sesión", description = "Retorna access y refresh tokens")
+    @Operation(summary = "Login", description = "Returns access and refresh tokens")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request,
                                               HttpServletRequest httpRequest) {
         String ip = extractIp(httpRequest);
@@ -31,13 +31,13 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    @Operation(summary = "Renovar access token usando refresh token")
+    @Operation(summary = "Renew access token using refresh token")
     public ResponseEntity<AuthResponse> refresh(@Valid @RequestBody RefreshTokenRequest request) {
         return ResponseEntity.ok(authService.refreshToken(request));
     }
 
     @PostMapping("/logout")
-    @Operation(summary = "Cerrar sesión e invalidar refresh token")
+    @Operation(summary = "Logout and invalidate refresh token")
     public ResponseEntity<Void> logout(@Valid @RequestBody RefreshTokenRequest request,
                                        @AuthenticationPrincipal CustomUserDetails userDetails) {
         // currentUser could be null if only access token expired; handle gracefully

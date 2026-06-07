@@ -23,14 +23,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/branches")
 @RequiredArgsConstructor
-@Tag(name = "Branches", description = "Gestión de sucursales")
+@Tag(name = "Branches", description = "Branch management")
 public class BranchController {
 
     private final BranchService branchService;
     private final UserRepository userRepository;
 
     @GetMapping
-    @Operation(summary = "Listar sucursales con paginación")
+    @Operation(summary = "List branches with pagination")
     public ResponseEntity<PageResponse<BranchResponse>> findAll(
             @RequestParam(required = false) String search,
             @RequestParam(required = false) Boolean active,
@@ -41,19 +41,19 @@ public class BranchController {
     }
 
     @GetMapping("/active")
-    @Operation(summary = "Listar sucursales activas")
+    @Operation(summary = "List active branches")
     public ResponseEntity<List<BranchResponse>> findAllActive() {
         return ResponseEntity.ok(branchService.findAllActive());
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Obtener sucursal por ID")
+    @Operation(summary = "Get branch by ID")
     public ResponseEntity<BranchResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(branchService.findById(id));
     }
 
     @PostMapping
-    @Operation(summary = "Crear sucursal")
+    @Operation(summary = "Create branch")
     public ResponseEntity<BranchResponse> create(@Valid @RequestBody CreateBranchRequest request,
                                                   @AuthenticationPrincipal CustomUserDetails principal) {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -61,7 +61,7 @@ public class BranchController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Actualizar sucursal")
+    @Operation(summary = "Update branch")
     public ResponseEntity<BranchResponse> update(@PathVariable Long id,
                                                   @Valid @RequestBody CreateBranchRequest request,
                                                   @AuthenticationPrincipal CustomUserDetails principal) {
@@ -69,7 +69,7 @@ public class BranchController {
     }
 
     @PatchMapping("/{id}/toggle-active")
-    @Operation(summary = "Activar/desactivar sucursal")
+    @Operation(summary = "Toggle branch active status")
     public ResponseEntity<Void> toggleActive(@PathVariable Long id,
                                              @AuthenticationPrincipal CustomUserDetails principal) {
         branchService.toggleActive(id, resolveUser(principal));

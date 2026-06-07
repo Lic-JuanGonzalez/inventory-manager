@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Docs
 - Postman Collection v2.1 (`docs/api/inventory-api-collection.json`): 62 requests across 9 folders with automated test scripts, importable by Apidog
-  - Folders: Auth, Dashboard, Usuarios, Productos, Sucursales, Inventario, Transferencias, Auditoría, Seguridad
+  - Folders: Auth, Dashboard, Users, Products, Branches, Inventory, Transfers, Audit, Security
   - Bearer token auth on all authenticated requests; `noauth` on login/refresh/logout
   - `pm.environment.set()` for inter-step variable propagation (`accessToken`, `refreshToken`, `operatorToken`, `newUserId`, `newProductId`, `newBranchId`, `transferId`, `cancelTransferId`)
 

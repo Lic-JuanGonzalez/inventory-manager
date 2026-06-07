@@ -9,7 +9,7 @@ public record CreateUserRequest(
         @NotBlank @Email @Size(max = 150) String email,
         @NotBlank @Size(min = 8, max = 100)
         @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$",
-                 message = "Debe contener al menos una mayúscula, una minúscula y un número")
+                 message = "Must contain at least one uppercase letter, one lowercase letter, and one number")
         String password,
         @NotNull RoleType role
 ) {}

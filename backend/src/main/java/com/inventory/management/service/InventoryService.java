@@ -50,10 +50,10 @@ public class InventoryService {
     public InventoryResponse initializeInventory(InitInventoryRequest req, User currentUser) {
         inventoryRepository.findByProductIdAndBranchId(req.productId(), req.branchId())
                 .ifPresent(i -> { throw new BusinessException(
-                        "Inventario ya existe para este producto y sucursal", HttpStatus.CONFLICT); });
+                        "Inventory already exists for this product and branch", HttpStatus.CONFLICT); });
 
         if (req.minStock().compareTo(req.maxStock()) > 0) {
-            throw new BusinessException("Stock mínimo no puede ser mayor al stock máximo");
+            throw new BusinessException("Minimum stock cannot be greater than maximum stock");
         }
 
         Product product = productService.getOrThrow(req.productId());
@@ -78,7 +78,7 @@ public class InventoryService {
 
         Inventory inventory = inventoryRepository.findByProductIdAndBranchId(req.productId(), req.branchId())
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "No existe inventario para este producto en esta sucursal"));
+                        "No inventory found for this product in this branch"));
 
         BigDecimal stockBefore = inventory.getCurrentStock();
 
@@ -156,7 +156,7 @@ public class InventoryService {
     Inventory getInventoryOrThrow(Long productId, Long branchId) {
         return inventoryRepository.findByProductIdAndBranchId(productId, branchId)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "No existe inventario para el producto en la sucursal especificada"));
+                        "No inventory found for the product in the specified branch"));
     }
 
     public InventoryResponse toResponse(Inventory i) {

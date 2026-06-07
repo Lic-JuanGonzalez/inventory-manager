@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ProblemDetail> handleBadCredentials(BadCredentialsException ex) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.UNAUTHORIZED);
         pd.setTitle("Authentication Failed");
-        pd.setDetail("Credenciales inválidas");
+        pd.setDetail("Invalid credentials");
         pd.setType(URI.create("urn:problem:authentication-error"));
         pd.setProperty("timestamp", Instant.now());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(pd);
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ProblemDetail> handleDisabled(DisabledException ex) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
         pd.setTitle("Account Disabled");
-        pd.setDetail("Cuenta de usuario desactivada");
+        pd.setDetail("User account is disabled");
         pd.setType(URI.create("urn:problem:account-disabled"));
         pd.setProperty("timestamp", Instant.now());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(pd);
@@ -75,7 +75,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ProblemDetail> handleAccessDenied(AccessDeniedException ex) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
         pd.setTitle("Access Denied");
-        pd.setDetail("No tiene permisos para realizar esta operación");
+        pd.setDetail("You do not have permission to perform this operation");
         pd.setType(URI.create("urn:problem:access-denied"));
         pd.setProperty("timestamp", Instant.now());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(pd);
@@ -85,7 +85,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ProblemDetail> handleNotReadable(HttpMessageNotReadableException ex) {
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         pd.setTitle("Malformed Request");
-        pd.setDetail("El cuerpo de la solicitud contiene valores inválidos");
+        pd.setDetail("Request body contains invalid values");
         pd.setType(URI.create("urn:problem:bad-request"));
         pd.setProperty("timestamp", Instant.now());
         return ResponseEntity.badRequest().body(pd);
@@ -96,7 +96,7 @@ public class GlobalExceptionHandler {
         log.error("Unexpected error in request {}: {}", request.getDescription(false), ex.getMessage(), ex);
         ProblemDetail pd = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         pd.setTitle("Internal Server Error");
-        pd.setDetail("Error interno del servidor");
+        pd.setDetail("An unexpected error occurred");
         pd.setType(URI.create("urn:problem:internal-error"));
         pd.setProperty("timestamp", Instant.now());
         return ResponseEntity.internalServerError().body(pd);

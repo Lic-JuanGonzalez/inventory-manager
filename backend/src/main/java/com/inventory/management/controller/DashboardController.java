@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/dashboard")
 @RequiredArgsConstructor
-@Tag(name = "Dashboard", description = "Métricas e indicadores del sistema")
+@Tag(name = "Dashboard", description = "System metrics and KPIs")
 public class DashboardController {
 
     private final DashboardService dashboardService;
 
     @GetMapping
-    @Operation(summary = "Obtener datos del dashboard principal")
+    @Operation(summary = "Get main dashboard data")
     public ResponseEntity<DashboardResponse> getDashboard() {
         return ResponseEntity.ok(dashboardService.getDashboard());
     }

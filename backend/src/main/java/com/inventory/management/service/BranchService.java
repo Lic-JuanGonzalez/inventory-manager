@@ -43,7 +43,7 @@ public class BranchService {
     @Transactional
     public BranchResponse create(CreateBranchRequest req, User currentUser) {
         if (branchRepository.existsByName(req.name())) {
-            throw new BusinessException("Sucursal con ese nombre ya existe", HttpStatus.CONFLICT);
+            throw new BusinessException("Branch with that name already exists", HttpStatus.CONFLICT);
         }
         Branch branch = Branch.builder()
                 .name(req.name())
@@ -64,7 +64,7 @@ public class BranchService {
         BranchResponse before = toResponse(branch);
 
         if (branchRepository.existsByNameAndIdNot(req.name(), id)) {
-            throw new BusinessException("Sucursal con ese nombre ya existe", HttpStatus.CONFLICT);
+            throw new BusinessException("Branch with that name already exists", HttpStatus.CONFLICT);
         }
         branch.setName(req.name());
         branch.setAddress(req.address());
@@ -89,7 +89,7 @@ public class BranchService {
 
     public Branch getOrThrow(Long id) {
         return branchRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Sucursal", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Branch", id));
     }
 
     private BranchResponse toResponse(Branch b) {

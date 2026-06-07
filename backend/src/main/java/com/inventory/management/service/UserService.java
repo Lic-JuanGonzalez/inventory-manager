@@ -44,7 +44,7 @@ public class UserService {
     @Transactional
     public UserResponse create(CreateUserRequest req, User currentUser) {
         if (userRepository.existsByEmail(req.email())) {
-            throw new BusinessException("Email ya registrado: " + req.email(), HttpStatus.CONFLICT);
+            throw new BusinessException("Email already registered:" + req.email(), HttpStatus.CONFLICT);
         }
         Role role = em.createQuery("SELECT r FROM Role r WHERE r.name = :name", Role.class)
                 .setParameter("name", req.role())
@@ -70,7 +70,7 @@ public class UserService {
         UserResponse before = toResponse(user);
 
         if (!user.getEmail().equals(req.email()) && userRepository.existsByEmail(req.email())) {
-            throw new BusinessException("Email ya registrado: " + req.email(), HttpStatus.CONFLICT);
+            throw new BusinessException("Email already registered:" + req.email(), HttpStatus.CONFLICT);
         }
 
         Role role = em.createQuery("SELECT r FROM Role r WHERE r.name = :name", Role.class)
@@ -93,7 +93,7 @@ public class UserService {
     public void deactivate(Long id, User currentUser) {
         User user = getOrThrow(id);
         if (!user.getActive()) {
-            throw new BusinessException("Usuario ya está inactivo");
+            throw new BusinessException("User is already inactive");
         }
         user.setActive(false);
         userRepository.save(user);
@@ -103,7 +103,7 @@ public class UserService {
 
     private User getOrThrow(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario", id));
+                .orElseThrow(() -> new ResourceNotFoundException("User", id));
     }
 
     private UserResponse toResponse(User u) {

@@ -6,7 +6,7 @@ public class InsufficientStockException extends BusinessException {
 
     public InsufficientStockException(String productSku, String branchName,
                                       BigDecimal requested, BigDecimal available) {
-        super("Stock insuficiente para '%s' en '%s'. Solicitado: %s, Disponible: %s"
+        super("Insufficient stock for '%s' in '%s'. Requested: %s, Available: %s"
                 .formatted(productSku, branchName, requested, available));
     }
 }

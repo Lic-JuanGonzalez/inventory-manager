@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
-@Tag(name = "Users", description = "Gestión de usuarios")
+@Tag(name = "Users", description = "User management")
 public class UserController {
 
     private final UserService userService;
     private final UserRepository userRepository;
 
     @GetMapping
-    @Operation(summary = "Listar usuarios con paginación y filtros")
+    @Operation(summary = "List users with pagination and filters")
     public ResponseEntity<PageResponse<UserResponse>> findAll(
             @RequestParam(required = false) String search,
             @RequestParam(required = false) Boolean active,
@@ -42,13 +42,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Obtener usuario por ID")
+    @Operation(summary = "Get user by ID")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.findById(id));
     }
 
     @PostMapping
-    @Operation(summary = "Crear nuevo usuario")
+    @Operation(summary = "Create new user")
     public ResponseEntity<UserResponse> create(@Valid @RequestBody CreateUserRequest request,
                                                @AuthenticationPrincipal CustomUserDetails principal) {
         User currentUser = resolveUser(principal);
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Actualizar usuario")
+    @Operation(summary = "Update user")
     public ResponseEntity<UserResponse> update(@PathVariable Long id,
                                                @Valid @RequestBody UpdateUserRequest request,
                                                @AuthenticationPrincipal CustomUserDetails principal) {
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Desactivar usuario")
+    @Operation(summary = "Deactivate user")
     public ResponseEntity<Void> deactivate(@PathVariable Long id,
                                            @AuthenticationPrincipal CustomUserDetails principal) {
         userService.deactivate(id, resolveUser(principal));

@@ -21,10 +21,10 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("Inventory Management API")
-                        .description("API REST para el Sistema de Gestión de Inventario Multi-Sucursal")
+                        .description("REST API for the Multi-Branch Inventory Management System")
                         .version("1.0.0")
                         .contact(new Contact()
-                                .name("Equipo de Desarrollo")
+                                .name("Development Team")
                                 .email("dev@inventory.com"))
                         .license(new License()
                                 .name("MIT License")
@@ -40,6 +40,6 @@ public class SwaggerConfig {
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")
-                                        .description("Ingrese el JWT token")));
+                                        .description("Enter the JWT token")));
     }
 }

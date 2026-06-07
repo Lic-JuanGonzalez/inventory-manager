@@ -48,7 +48,7 @@ public class AuthService {
 
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
         User user = userRepository.findByEmailAndActiveTrue(request.email())
-                .orElseThrow(() -> new BusinessException("Usuario inactivo", HttpStatus.FORBIDDEN));
+                .orElseThrow(() -> new BusinessException("Inactive user", HttpStatus.FORBIDDEN));
 
         refreshTokenRepository.revokeAllUserTokens(user);
 
@@ -67,10 +67,10 @@ public class AuthService {
     @Transactional
     public AuthResponse refreshToken(RefreshTokenRequest request) {
         RefreshToken stored = refreshTokenRepository.findByToken(request.refreshToken())
-                .orElseThrow(() -> new BusinessException("Refresh token inválido", HttpStatus.UNAUTHORIZED));
+                .orElseThrow(() -> new BusinessException("Invalid refresh token", HttpStatus.UNAUTHORIZED));
 
         if (!stored.isValid()) {
-            throw new BusinessException("Refresh token expirado o revocado", HttpStatus.UNAUTHORIZED);
+            throw new BusinessException("Refresh token expired or revoked", HttpStatus.UNAUTHORIZED);
         }
 
         User user = stored.getUser();

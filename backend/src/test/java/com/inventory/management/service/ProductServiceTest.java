@@ -78,7 +78,7 @@ class ProductServiceTest {
 
         assertThatThrownBy(() -> productService.create(req, currentUser))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("SKU ya registrado");
+                .hasMessageContaining("SKU already registered");
 
         verify(productRepository, never()).save(any());
     }

@@ -39,7 +39,7 @@ public class ProductService {
     @Transactional
     public ProductResponse create(CreateProductRequest req, User currentUser) {
         if (productRepository.existsBySku(req.sku())) {
-            throw new BusinessException("SKU ya registrado: " + req.sku(), HttpStatus.CONFLICT);
+            throw new BusinessException("SKU already registered:" + req.sku(), HttpStatus.CONFLICT);
         }
         ProductCategory category = resolveCategory(req.categoryId());
 
@@ -64,7 +64,7 @@ public class ProductService {
         ProductResponse before = toResponse(product);
 
         if (productRepository.existsBySkuAndIdNot(req.sku(), id)) {
-            throw new BusinessException("SKU ya registrado: " + req.sku(), HttpStatus.CONFLICT);
+            throw new BusinessException("SKU already registered:" + req.sku(), HttpStatus.CONFLICT);
         }
         ProductCategory category = resolveCategory(req.categoryId());
 
@@ -93,13 +93,13 @@ public class ProductService {
 
     public Product getOrThrow(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Producto", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Product", id));
     }
 
     private ProductCategory resolveCategory(Long categoryId) {
         if (categoryId == null) return null;
         return categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResourceNotFoundException("Categoría", categoryId));
+                .orElseThrow(() -> new ResourceNotFoundException("Category", categoryId));
     }
 
     public ProductResponse toResponse(Product p) {

@@ -19,13 +19,13 @@ import java.time.Instant;
 @RequestMapping("/audit")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN','AUDITOR')")
-@Tag(name = "Audit", description = "Registro de auditoría de operaciones")
+@Tag(name = "Audit", description = "Operation audit log")
 public class AuditController {
 
     private final AuditService auditService;
 
     @GetMapping
-    @Operation(summary = "Consultar logs de auditoría con filtros")
+    @Operation(summary = "Query audit logs with filters")
     public ResponseEntity<PageResponse<AuditLogResponse>> findAll(
             @RequestParam(required = false) Long userId,
             @RequestParam(required = false) String action,

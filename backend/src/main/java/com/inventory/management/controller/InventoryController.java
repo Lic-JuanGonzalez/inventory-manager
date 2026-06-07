@@ -26,14 +26,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/inventory")
 @RequiredArgsConstructor
-@Tag(name = "Inventory", description = "Control de inventario y movimientos")
+@Tag(name = "Inventory", description = "Inventory control and movements")
 public class InventoryController {
 
     private final InventoryService inventoryService;
     private final UserRepository userRepository;
 
     @GetMapping
-    @Operation(summary = "Listar inventario con filtros")
+    @Operation(summary = "List inventory with filters")
     public ResponseEntity<PageResponse<InventoryResponse>> findAll(
             @RequestParam(required = false) Long branchId,
             @RequestParam(required = false) Long productId,
@@ -46,13 +46,13 @@ public class InventoryController {
     }
 
     @GetMapping("/low-stock")
-    @Operation(summary = "Productos con stock bajo el mínimo")
+    @Operation(summary = "Products below minimum stock")
     public ResponseEntity<List<InventoryResponse>> getLowStock() {
         return ResponseEntity.ok(inventoryService.findLowStock());
     }
 
     @PostMapping("/initialize")
-    @Operation(summary = "Inicializar inventario para un producto en sucursal")
+    @Operation(summary = "Initialize inventory for a product in a branch")
     public ResponseEntity<InventoryResponse> initialize(@Valid @RequestBody InitInventoryRequest request,
                                                         @AuthenticationPrincipal CustomUserDetails principal) {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -60,7 +60,7 @@ public class InventoryController {
     }
 
     @PostMapping("/movement")
-    @Operation(summary = "Registrar movimiento de inventario (entrada o salida)")
+    @Operation(summary = "Register inventory movement (inbound or outbound)")
     public ResponseEntity<MovementResponse> registerMovement(
             @Valid @RequestBody InventoryMovementRequest request,
             @AuthenticationPrincipal CustomUserDetails principal) {
@@ -69,7 +69,7 @@ public class InventoryController {
     }
 
     @GetMapping("/movements")
-    @Operation(summary = "Historial de movimientos con filtros")
+    @Operation(summary = "Movement history with filters")
     public ResponseEntity<PageResponse<MovementResponse>> getMovements(
             @RequestParam(required = false) Long branchId,
             @RequestParam(required = false) Long productId,

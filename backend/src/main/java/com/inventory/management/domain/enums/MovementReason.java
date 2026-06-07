@@ -1,12 +1,12 @@
 package com.inventory.management.domain.enums;
 
 public enum MovementReason {
-    // ENTRADAS
+    // INBOUND
     COMPRA,
     DEVOLUCION_ENTRADA,
     AJUSTE_POSITIVO,
     TRANSFERENCIA_ENTRADA,
-    // SALIDAS
+    // OUTBOUND
     VENTA,
     PERDIDA,
     AJUSTE_NEGATIVO,

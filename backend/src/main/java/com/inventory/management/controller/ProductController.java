@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
-@Tag(name = "Products", description = "Gestión de productos")
+@Tag(name = "Products", description = "Product management")
 public class ProductController {
 
     private final ProductService productService;
     private final UserRepository userRepository;
 
     @GetMapping
-    @Operation(summary = "Listar productos con filtros y paginación")
+    @Operation(summary = "List products with filters and pagination")
     public ResponseEntity<PageResponse<ProductResponse>> findAll(
             @RequestParam(required = false) String search,
             @RequestParam(required = false) Long categoryId,
@@ -40,13 +40,13 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Obtener producto por ID")
+    @Operation(summary = "Get product by ID")
     public ResponseEntity<ProductResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(productService.findById(id));
     }
 
     @PostMapping
-    @Operation(summary = "Crear producto")
+    @Operation(summary = "Create product")
     public ResponseEntity<ProductResponse> create(@Valid @RequestBody CreateProductRequest request,
                                                    @AuthenticationPrincipal CustomUserDetails principal) {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -54,7 +54,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Actualizar producto")
+    @Operation(summary = "Update product")
     public ResponseEntity<ProductResponse> update(@PathVariable Long id,
                                                    @Valid @RequestBody CreateProductRequest request,
                                                    @AuthenticationPrincipal CustomUserDetails principal) {
@@ -62,7 +62,7 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}/toggle-active")
-    @Operation(summary = "Activar/desactivar producto")
+    @Operation(summary = "Toggle product active status")
     public ResponseEntity<Void> toggleActive(@PathVariable Long id,
                                              @AuthenticationPrincipal CustomUserDetails principal) {
         productService.toggleActive(id, resolveUser(principal));

@@ -56,7 +56,7 @@ public class TransferService {
     @Transactional
     public TransferResponse create(CreateTransferRequest req, User requestedBy) {
         if (req.originBranchId().equals(req.destinationBranchId())) {
-            throw new BusinessException("Las sucursales origen y destino deben ser diferentes");
+            throw new BusinessException("Origin and destination branches must be different");
         }
         Branch origin      = branchService.getOrThrow(req.originBranchId());
         Branch destination = branchService.getOrThrow(req.destinationBranchId());
@@ -88,7 +88,7 @@ public class TransferService {
     @Transactional
     public TransferResponse approve(Long id, User approvedBy) {
         TransferRequest transfer = getOrThrow(id);
-        assertStatus(transfer, TransferStatus.PENDIENTE, "aprobar");
+        assertStatus(transfer, TransferStatus.PENDIENTE, "approve");
 
         transfer.setStatus(TransferStatus.APROBADA);
         transfer.setApprovedBy(approvedBy);
@@ -103,7 +103,7 @@ public class TransferService {
     @Transactional
     public TransferResponse ship(Long id, User shippedBy) {
         TransferRequest transfer = getOrThrow(id);
-        assertStatus(transfer, TransferStatus.APROBADA, "enviar");
+        assertStatus(transfer, TransferStatus.APROBADA, "ship");
 
         Inventory originInventory = inventoryService.getInventoryOrThrow(
                 transfer.getProduct().getId(), transfer.getOriginBranch().getId());
@@ -133,7 +133,7 @@ public class TransferService {
     @Transactional
     public TransferResponse receive(Long id, User receivedBy) {
         TransferRequest transfer = getOrThrow(id);
-        assertStatus(transfer, TransferStatus.EN_TRANSITO, "recibir");
+        assertStatus(transfer, TransferStatus.EN_TRANSITO, "receive");
 
         Inventory destInventory = inventoryService.getInventoryOrThrow(
                 transfer.getProduct().getId(), transfer.getDestinationBranch().getId());
@@ -156,7 +156,7 @@ public class TransferService {
         TransferRequest transfer = getOrThrow(id);
         if (transfer.getStatus() == TransferStatus.RECIBIDA ||
             transfer.getStatus() == TransferStatus.CANCELADA) {
-            throw new BusinessException("No se puede cancelar una transferencia " + transfer.getStatus());
+            throw new BusinessException("Cannot cancel a transfer with status " + transfer.getStatus());
         }
         transfer.setStatus(TransferStatus.CANCELADA);
         transfer = transferRepository.save(transfer);
@@ -168,13 +168,13 @@ public class TransferService {
 
     private TransferRequest getOrThrow(Long id) {
         return transferRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Transferencia", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Transfer", id));
     }
 
     private void assertStatus(TransferRequest transfer, TransferStatus expected, String action) {
         if (transfer.getStatus() != expected) {
             throw new BusinessException(
-                    "No se puede %s una transferencia en estado %s".formatted(action, transfer.getStatus()),
+                    "Cannot %s a transfer with status %s".formatted(action, transfer.getStatus()),
                     HttpStatus.CONFLICT
             );
         }
