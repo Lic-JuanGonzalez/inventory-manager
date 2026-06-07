@@ -67,12 +67,12 @@ public class SecurityConfig {
                         .authenticationEntryPoint((req, res, e) -> {
                             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             res.setContentType("application/json");
-                            res.getWriter().write("{\"status\":401,\"detail\":\"No autenticado\"}");
+                            res.getWriter().write("{\"status\":401,\"detail\":\"Unauthenticated\"}");
                         })
                         .accessDeniedHandler((req, res, e) -> {
                             res.setStatus(HttpServletResponse.SC_FORBIDDEN);
                             res.setContentType("application/json");
-                            res.getWriter().write("{\"status\":403,\"detail\":\"Acceso denegado\"}");
+                            res.getWriter().write("{\"status\":403,\"detail\":\"Access denied\"}");
                         })
                 )
                 .authenticationProvider(authenticationProvider())
