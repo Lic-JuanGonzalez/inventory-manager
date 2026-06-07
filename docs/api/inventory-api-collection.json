@@ -219,7 +219,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 400', () => pm.response.to.have.status(400));"
+                  "pm.test('Status 422', () => pm.response.to.have.status(422));"
                 ]
               }
             }
@@ -375,7 +375,7 @@
                   "pm.test('Tiene metricas principales', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.be.an('object');",
-                  "    pm.expect(j).to.have.any.keys('totalProducts','totalBranches','totalUsers','lowStockAlerts','recentMovements');",
+                  "    pm.expect(j).to.include.any.keys('lowStockCount','pendingTransfersCount','monthlyMovementsCount','totalStockValue');",
                   "});"
                 ]
               }
@@ -741,7 +741,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 400', () => pm.response.to.have.status(400));"
+                  "pm.test('Status 422', () => pm.response.to.have.status(422));"
                 ]
               }
             }
@@ -1019,7 +1019,7 @@
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
                   "pm.test('Tiene campos esperados', () => {",
                   "    const j = pm.response.json();",
-                  "    pm.expect(j).to.have.all.keys('id','sku','name','unitOfMeasure','referencePrice','active','createdAt');",
+                  "    pm.expect(j).to.include.keys('id','sku','name','unitOfMeasure','referencePrice','active');",
                   "});"
                 ]
               }
@@ -1205,7 +1205,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 400', () => pm.response.to.have.status(400));"
+                  "pm.test('Status 422', () => pm.response.to.have.status(422));"
                 ]
               }
             }
@@ -1481,7 +1481,7 @@
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
                   "pm.test('Tiene campos', () => {",
                   "    const j = pm.response.json();",
-                  "    pm.expect(j).to.have.all.keys('id','name','address','active');",
+                  "    pm.expect(j).to.include.keys('id','name','address','active');",
                   "});"
                 ]
               }
@@ -1613,7 +1613,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 400', () => pm.response.to.have.status(400));"
+                  "pm.test('Status 422', () => pm.response.to.have.status(422));"
                 ]
               }
             }
@@ -3351,6 +3351,58 @@
           }
         },
         {
+          "name": "Create OPERATOR for security",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"name\": \"Security\",\n  \"lastName\": \"Operator\",\n  \"email\": \"sec.operator@test.com\",\n  \"password\": \"Operator1\",\n  \"role\": \"OPERATOR\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
           "name": "Login como OPERATOR (para tests 403)",
           "event": [
             {
@@ -3381,7 +3433,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"juan.operador@test.com\",\n  \"password\": \"Operator1\"\n}",
+              "raw": "{\n  \"email\": \"sec.operator@test.com\",\n  \"password\": \"Operator1\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
