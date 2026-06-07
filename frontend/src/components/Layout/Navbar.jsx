@@ -22,7 +22,7 @@ export default function Navbar({ drawerWidth, onMenuClick }) {
 
         <InventoryIcon sx={{ mr: 1 }} />
         <Typography variant="h6" noWrap sx={{ flexGrow: 1, fontWeight: 600 }}>
-          Inventario Multi-Sucursal
+          Multi-Branch Inventory
         </Typography>
 
         {user && (
@@ -39,7 +39,7 @@ export default function Navbar({ drawerWidth, onMenuClick }) {
                 {user.fullName?.charAt(0).toUpperCase()}
               </Avatar>
             </Tooltip>
-            <Tooltip title="Cerrar sesión">
+            <Tooltip title="Logout">
               <IconButton color="inherit" onClick={logout} size="small">
                 <LogoutIcon />
               </IconButton>

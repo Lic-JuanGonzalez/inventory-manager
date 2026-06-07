@@ -36,9 +36,9 @@ export default function LoginPage() {
         <CardContent sx={{ p: 4 }}>
           <Box sx={{ textAlign: 'center', mb: 3 }}>
             <InventoryIcon sx={{ fontSize: 48, color: 'primary.main', mb: 1 }} />
-            <Typography variant="h5" fontWeight={700}>Iniciar Sesión</Typography>
+            <Typography variant="h5" fontWeight={700}>Sign In</Typography>
             <Typography variant="body2" color="text.secondary">
-              Sistema de Inventario Multi-Sucursal
+              Multi-Branch Inventory System
             </Typography>
           </Box>
 
@@ -51,7 +51,7 @@ export default function LoginPage() {
               sx={{ mb: 2 }}
             />
             <TextField
-              fullWidth label="Contraseña" required
+              fullWidth label="Password" required
               type={showPassword ? 'text' : 'password'}
               value={form.password} onChange={e => setForm(p => ({ ...p, password: e.target.value }))}
               InputProps={{
@@ -69,7 +69,7 @@ export default function LoginPage() {
               fullWidth type="submit" variant="contained" size="large"
               disabled={loading} sx={{ py: 1.5 }}
             >
-              {loading ? <CircularProgress size={24} color="inherit" /> : 'Ingresar'}
+              {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign In'}
             </Button>
           </Box>
 

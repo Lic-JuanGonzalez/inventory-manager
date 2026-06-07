@@ -34,28 +34,28 @@ export default function BranchFormDialog({ open, branch, onClose, onSaved }) {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{isEdit ? 'Editar Sucursal' : 'Nueva Sucursal'}</DialogTitle>
+      <DialogTitle>{isEdit ? 'Edit Branch' : 'New Branch'}</DialogTitle>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Controller name="name" control={control} rules={{ required: 'Nombre requerido' }}
+              <Controller name="name" control={control} rules={{ required: 'Name required' }}
                 render={({ field }) => (
-                  <TextField {...field} label="Nombre *" fullWidth size="small"
+                  <TextField {...field} label="Name *" fullWidth size="small"
                     error={!!errors.name} helperText={errors.name?.message} />
                 )} />
             </Grid>
             <Grid item xs={12}>
-              <Controller name="address" control={control} rules={{ required: 'Dirección requerida' }}
+              <Controller name="address" control={control} rules={{ required: 'Address required' }}
                 render={({ field }) => (
-                  <TextField {...field} label="Dirección *" fullWidth size="small"
+                  <TextField {...field} label="Address *" fullWidth size="small"
                     error={!!errors.address} helperText={errors.address?.message} />
                 )} />
             </Grid>
             <Grid item xs={6}>
               <Controller name="phone" control={control}
-                render={({ field }) => <TextField {...field} label="Teléfono" fullWidth size="small" />} />
+                render={({ field }) => <TextField {...field} label="Phone" fullWidth size="small" />} />
             </Grid>
             <Grid item xs={6}>
               <Controller name="email" control={control}
@@ -64,9 +64,9 @@ export default function BranchFormDialog({ open, branch, onClose, onSaved }) {
           </Grid>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>Cancel</Button>
           <Button type="submit" variant="contained" disabled={isSubmitting}>
-            {isSubmitting ? <CircularProgress size={20} /> : isEdit ? 'Guardar' : 'Crear'}
+            {isSubmitting ? <CircularProgress size={20} /> : isEdit ? 'Save' : 'Create'}
           </Button>
         </DialogActions>
       </Box>

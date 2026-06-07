@@ -42,29 +42,29 @@ export default function ProductsPage() {
 
   const columns = [
     { field: 'sku', headerName: 'SKU', width: 120 },
-    { field: 'name', headerName: 'Nombre', flex: 1, minWidth: 180 },
-    { field: 'categoryName', headerName: 'Categoría', width: 130 },
+    { field: 'name', headerName: 'Name', flex: 1, minWidth: 180 },
+    { field: 'categoryName', headerName: 'Category', width: 130 },
     { field: 'unitOfMeasure', headerName: 'Unidad', width: 100 },
     {
-      field: 'referencePrice', headerName: 'Precio Ref.', width: 120, type: 'number',
+      field: 'referencePrice', headerName: 'Ref. Price', width: 120, type: 'number',
       valueFormatter: ({ value }) => `$${Number(value).toLocaleString('es-MX', { minimumFractionDigits: 2 })}`
     },
     {
-      field: 'active', headerName: 'Estado', width: 100,
+      field: 'active', headerName: 'Status', width: 100,
       renderCell: ({ value }) => (
-        <Chip label={value ? 'Activo' : 'Inactivo'} color={value ? 'success' : 'default'} size="small" />
+        <Chip label={value ? 'Active' : 'Inactive'} color={value ? 'success' : 'default'} size="small" />
       )
     },
     {
-      field: 'actions', headerName: 'Acciones', width: 100, sortable: false,
+      field: 'actions', headerName: 'Actions', width: 100, sortable: false,
       renderCell: ({ row }) => canEdit && (
         <Stack direction="row">
-          <Tooltip title="Editar">
+          <Tooltip title="Edit">
             <IconButton size="small" onClick={() => { setSelected(row); setDialogOpen(true) }}>
               <EditIcon fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title={row.active ? 'Desactivar' : 'Activar'}>
+          <Tooltip title={row.active ? 'Deactivate' : 'Activate'}>
             <IconButton size="small" onClick={() => handleToggle(row.id)}>
               <PowerSettingsNewIcon fontSize="small" color={row.active ? 'success' : 'disabled'} />
             </IconButton>
@@ -77,11 +77,11 @@ export default function ProductsPage() {
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h5" fontWeight={700}>Productos</Typography>
+        <Typography variant="h5" fontWeight={700}>Products</Typography>
         {canEdit && (
           <Button variant="contained" startIcon={<AddIcon />}
             onClick={() => { setSelected(null); setDialogOpen(true) }}>
-            Nuevo Producto
+            New Product
           </Button>
         )}
       </Box>
@@ -89,16 +89,16 @@ export default function ProductsPage() {
       <Card sx={{ mb: 2 }}>
         <CardContent>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-            <TextField size="small" placeholder="Buscar por nombre o SKU..."
+            <TextField size="small" placeholder="Search by name or SKU..."
               value={search} onChange={e => { setSearch(e.target.value); setPage(0) }}
               InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment> }}
               sx={{ flex: 1 }} />
             <FormControl size="small" sx={{ minWidth: 140 }}>
-              <InputLabel>Estado</InputLabel>
-              <Select value={active} label="Estado" onChange={e => { setActive(e.target.value); setPage(0) }}>
-                <MenuItem value="">Todos</MenuItem>
-                <MenuItem value="true">Activos</MenuItem>
-                <MenuItem value="false">Inactivos</MenuItem>
+              <InputLabel>Status</InputLabel>
+              <Select value={active} label="Status" onChange={e => { setActive(e.target.value); setPage(0) }}>
+                <MenuItem value="">All</MenuItem>
+                <MenuItem value="true">Active</MenuItem>
+                <MenuItem value="false">Inactive</MenuItem>
               </Select>
             </FormControl>
           </Stack>

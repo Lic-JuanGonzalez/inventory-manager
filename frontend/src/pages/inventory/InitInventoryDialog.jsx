@@ -44,7 +44,7 @@ export default function InitInventoryDialog({ open, onClose, onSaved }) {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Inicializar Inventario</DialogTitle>
+      <DialogTitle>Initialize Inventory</DialogTitle>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
@@ -53,8 +53,8 @@ export default function InitInventoryDialog({ open, onClose, onSaved }) {
               <Controller name="productId" control={control} rules={{ required: 'Seleccione producto' }}
                 render={({ field }) => (
                   <FormControl fullWidth size="small" error={!!errors.productId}>
-                    <InputLabel>Producto *</InputLabel>
-                    <Select {...field} label="Producto *">
+                    <InputLabel>Product *</InputLabel>
+                    <Select {...field} label="Product *">
                       {products.map(p => <MenuItem key={p.id} value={p.id}>{p.sku} - {p.name}</MenuItem>)}
                     </Select>
                   </FormControl>
@@ -64,8 +64,8 @@ export default function InitInventoryDialog({ open, onClose, onSaved }) {
               <Controller name="branchId" control={control} rules={{ required: 'Seleccione sucursal' }}
                 render={({ field }) => (
                   <FormControl fullWidth size="small" error={!!errors.branchId}>
-                    <InputLabel>Sucursal *</InputLabel>
-                    <Select {...field} label="Sucursal *">
+                    <InputLabel>Branch *</InputLabel>
+                    <Select {...field} label="Branch *">
                       {branches.map(b => <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>)}
                     </Select>
                   </FormControl>
@@ -75,7 +75,7 @@ export default function InitInventoryDialog({ open, onClose, onSaved }) {
               <Grid item xs={4} key={field}>
                 <Controller name={field} control={control} rules={{ required: 'Requerido', min: 0 }}
                   render={({ field: f }) => (
-                    <TextField {...f} label={{ currentStock: 'Stock Inicial', minStock: 'Stock Mín.', maxStock: 'Stock Máx.' }[field]}
+                    <TextField {...f} label={{ currentStock: 'Initial Stock', minStock: 'Min. Stock', maxStock: 'Max. Stock' }[field]}
                       fullWidth size="small" type="number" inputProps={{ min: '0', step: '0.001' }}
                       error={!!errors[field]} helperText={errors[field]?.message} />
                   )} />
@@ -84,7 +84,7 @@ export default function InitInventoryDialog({ open, onClose, onSaved }) {
           </Grid>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>Cancel</Button>
           <Button type="submit" variant="contained" disabled={isSubmitting}>
             {isSubmitting ? <CircularProgress size={20} /> : 'Inicializar'}
           </Button>

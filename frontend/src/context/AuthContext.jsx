@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
       setUser(userData)
       return { success: true }
     } catch (err) {
-      return { success: false, error: err.response?.data?.detail || 'Credenciales inválidas' }
+      return { success: false, error: err.response?.data?.detail || 'Invalid credentials' }
     } finally {
       setLoading(false)
     }

@@ -40,7 +40,7 @@ export default function ProductFormDialog({ open, product, onClose, onSaved }) {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>{isEdit ? 'Editar Producto' : 'Nuevo Producto'}</DialogTitle>
+      <DialogTitle>{isEdit ? 'Edit Product' : 'New Product'}</DialogTitle>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
@@ -61,23 +61,23 @@ export default function ProductFormDialog({ open, product, onClose, onSaved }) {
                 )} />
             </Grid>
             <Grid item xs={12}>
-              <Controller name="name" control={control} rules={{ required: 'Nombre requerido' }}
+              <Controller name="name" control={control} rules={{ required: 'Name required' }}
                 render={({ field }) => (
-                  <TextField {...field} label="Nombre *" fullWidth size="small"
+                  <TextField {...field} label="Name *" fullWidth size="small"
                     error={!!errors.name} helperText={errors.name?.message} />
                 )} />
             </Grid>
             <Grid item xs={12}>
               <Controller name="description" control={control}
                 render={({ field }) => (
-                  <TextField {...field} label="Descripción" fullWidth size="small" multiline rows={3} />
+                  <TextField {...field} label="Description" fullWidth size="small" multiline rows={3} />
                 )} />
             </Grid>
             <Grid item xs={12} sm={6}>
               <Controller name="referencePrice" control={control}
-                rules={{ required: 'Precio requerido', min: { value: 0, message: 'Debe ser >= 0' } }}
+                rules={{ required: 'Price required', min: { value: 0, message: 'Must be >= 0' } }}
                 render={({ field }) => (
-                  <TextField {...field} label="Precio Referencia *" fullWidth size="small" type="number"
+                  <TextField {...field} label="Reference Price *" fullWidth size="small" type="number"
                     inputProps={{ step: '0.01', min: '0' }}
                     error={!!errors.referencePrice} helperText={errors.referencePrice?.message} />
                 )} />
@@ -85,9 +85,9 @@ export default function ProductFormDialog({ open, product, onClose, onSaved }) {
           </Grid>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>Cancel</Button>
           <Button type="submit" variant="contained" disabled={isSubmitting}>
-            {isSubmitting ? <CircularProgress size={20} /> : isEdit ? 'Guardar' : 'Crear'}
+            {isSubmitting ? <CircularProgress size={20} /> : isEdit ? 'Save' : 'Create'}
           </Button>
         </DialogActions>
       </Box>

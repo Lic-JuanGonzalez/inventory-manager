@@ -35,7 +35,7 @@ export default function DashboardPage() {
   useEffect(() => {
     dashboardApi.getDashboard()
       .then(r => setData(r.data))
-      .catch(() => setError('Error cargando dashboard'))
+      .catch(() => setError('Error loading dashboard'))
       .finally(() => setLoading(false))
   }, [])
 
@@ -50,21 +50,21 @@ export default function DashboardPage() {
 
       <Grid container spacing={3} mb={3}>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard icon={<WarningAmberIcon />} label="Stock Bajo Mínimo"
-            value={data?.lowStockCount ?? 0} color="warning" subtitle="productos" />
+          <StatCard icon={<WarningAmberIcon />} label="Low Stock"
+            value={data?.lowStockCount ?? 0} color="warning" subtitle="products" />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard icon={<SwapHorizIcon />} label="Transferencias Pendientes"
-            value={data?.pendingTransfersCount ?? 0} color="info" subtitle="por aprobar" />
+          <StatCard icon={<SwapHorizIcon />} label="Pending Transfers"
+            value={data?.pendingTransfersCount ?? 0} color="info" subtitle="pending approval" />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard icon={<TrendingUpIcon />} label="Movimientos del Mes"
-            value={data?.monthlyMovementsCount ?? 0} color="success" subtitle="últimos 30 días" />
+          <StatCard icon={<TrendingUpIcon />} label="Monthly Movements"
+            value={data?.monthlyMovementsCount ?? 0} color="success" subtitle="last 30 days" />
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <StatCard icon={<AttachMoneyIcon />} label="Valor Total Stock"
+          <StatCard icon={<AttachMoneyIcon />} label="Total Stock Value"
             value={`$${(data?.totalStockValue ?? 0).toLocaleString('es-MX', { minimumFractionDigits: 0 })}`}
-            color="primary" subtitle="valorizado" />
+            color="primary" subtitle="valued" />
         </Grid>
       </Grid>
 
@@ -72,17 +72,17 @@ export default function DashboardPage() {
         <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
-              <Typography variant="h6" fontWeight={600} mb={2}>Productos con Bajo Stock</Typography>
+              <Typography variant="h6" fontWeight={600} mb={2}>Low Stock Products</Typography>
               {data?.lowStockItems?.length === 0
-                ? <Typography color="text.secondary">No hay productos con bajo stock</Typography>
+                ? <Typography color="text.secondary">No products with low stock</Typography>
                 : (
                   <Table size="small">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Producto</TableCell>
-                        <TableCell>Sucursal</TableCell>
+                        <TableCell>Product</TableCell>
+                        <TableCell>Branch</TableCell>
                         <TableCell align="right">Stock</TableCell>
-                        <TableCell align="right">Mínimo</TableCell>
+                        <TableCell align="right">Minimum</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -107,7 +107,7 @@ export default function DashboardPage() {
         <Grid item xs={12} md={6}>
           <Card>
             <CardContent>
-              <Typography variant="h6" fontWeight={600} mb={2}>Productos Más Movidos (30 días)</Typography>
+              <Typography variant="h6" fontWeight={600} mb={2}>Top Moved Products (30 days)</Typography>
               {chartData.length > 0 ? (
                 <ResponsiveContainer width="100%" height={250}>
                   <BarChart data={chartData}>
@@ -117,7 +117,7 @@ export default function DashboardPage() {
                     <Bar dataKey="movimientos" fill="#1976d2" radius={[4,4,0,0]} />
                   </BarChart>
                 </ResponsiveContainer>
-              ) : <Typography color="text.secondary">Sin datos de movimientos</Typography>}
+              ) : <Typography color="text.secondary">No movement data</Typography>}
             </CardContent>
           </Card>
         </Grid>

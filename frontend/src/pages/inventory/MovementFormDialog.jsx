@@ -9,10 +9,10 @@ import { inventoryApi } from '../../api/inventoryApi'
 
 const REASONS = [
   { value: 'COMPRA', label: 'Compra', type: 'ENTRADA' },
-  { value: 'DEVOLUCION_ENTRADA', label: 'Devolución (entrada)', type: 'ENTRADA' },
+  { value: 'RETURN_INBOUND', label: 'Return (inbound)', type: 'INBOUND' },
   { value: 'AJUSTE_POSITIVO', label: 'Ajuste positivo', type: 'ENTRADA' },
   { value: 'VENTA', label: 'Venta', type: 'SALIDA' },
-  { value: 'PERDIDA', label: 'Pérdida', type: 'SALIDA' },
+  { value: 'LOSS', label: 'Loss', type: 'OUTBOUND' },
   { value: 'AJUSTE_NEGATIVO', label: 'Ajuste negativo', type: 'SALIDA' },
 ]
 
@@ -46,14 +46,14 @@ export default function MovementFormDialog({ open, inventory, onClose, onSaved }
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Registrar Movimiento</DialogTitle>
+      <DialogTitle>Register Movement</DialogTitle>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           {inventory && (
             <Box sx={{ mb: 2, p: 1.5, bgcolor: 'grey.50', borderRadius: 1 }}>
               <Typography variant="body2" fontWeight={600}>{inventory.productName}</Typography>
               <Typography variant="caption" color="text.secondary">
-                {inventory.branchName} · Stock actual: {inventory.currentStock} {inventory.unitOfMeasure}
+                {inventory.branchName} · Current stock: {inventory.currentStock} {inventory.unitOfMeasure}
               </Typography>
             </Box>
           )}
@@ -76,9 +76,9 @@ export default function MovementFormDialog({ open, inventory, onClose, onSaved }
             </Grid>
             <Grid item xs={12}>
               <Controller name="quantity" control={control}
-                rules={{ required: 'Cantidad requerida', min: { value: 0.001, message: 'Debe ser > 0' } }}
+                rules={{ required: 'Quantity required', min: { value: 0.001, message: 'Must be > 0' } }}
                 render={({ field }) => (
-                  <TextField {...field} label="Cantidad *" fullWidth size="small" type="number"
+                  <TextField {...field} label="Quantity *" fullWidth size="small" type="number"
                     inputProps={{ step: '0.001', min: '0.001' }}
                     error={!!errors.quantity} helperText={errors.quantity?.message} />
                 )} />
@@ -92,11 +92,11 @@ export default function MovementFormDialog({ open, inventory, onClose, onSaved }
           </Grid>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>Cancel</Button>
           <Button type="submit" variant="contained"
             color={selectedReason?.type === 'SALIDA' ? 'error' : 'primary'}
             disabled={isSubmitting}>
-            {isSubmitting ? <CircularProgress size={20} /> : `Registrar ${selectedReason?.type || ''}`}
+            {isSubmitting ? <CircularProgress size={20} /> : `Register ${selectedReason?.type || ''}`}
           </Button>
         </DialogActions>
       </Box>

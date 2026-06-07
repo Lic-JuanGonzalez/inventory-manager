@@ -38,29 +38,29 @@ export default function InventoryPage() {
 
   const columns = [
     { field: 'productSku', headerName: 'SKU', width: 110 },
-    { field: 'productName', headerName: 'Producto', flex: 1, minWidth: 180 },
-    { field: 'branchName', headerName: 'Sucursal', width: 140 },
-    { field: 'categoryName', headerName: 'Categoría', width: 120 },
+    { field: 'productName', headerName: 'Product', flex: 1, minWidth: 180 },
+    { field: 'branchName', headerName: 'Branch', width: 140 },
+    { field: 'categoryName', headerName: 'Category', width: 120 },
     {
-      field: 'currentStock', headerName: 'Stock Actual', width: 120, type: 'number',
+      field: 'currentStock', headerName: 'Current Stock', width: 120, type: 'number',
       renderCell: ({ row }) => (
         <Chip label={row.currentStock}
           color={row.belowMinStock ? 'error' : row.currentStock <= row.minStock * 1.2 ? 'warning' : 'success'}
           size="small" />
       )
     },
-    { field: 'minStock', headerName: 'Mín.', width: 80, type: 'number' },
-    { field: 'maxStock', headerName: 'Máx.', width: 80, type: 'number' },
-    { field: 'unitOfMeasure', headerName: 'Unidad', width: 80 },
+    { field: 'minStock', headerName: 'Min.', width: 80, type: 'number' },
+    { field: 'maxStock', headerName: 'Max.', width: 80, type: 'number' },
+    { field: 'unitOfMeasure', headerName: 'Unit', width: 80 },
     {
-      field: 'stockValue', headerName: 'Valor', width: 120, type: 'number',
+      field: 'stockValue', headerName: 'Value', width: 120, type: 'number',
       valueFormatter: ({ value }) => `$${Number(value).toLocaleString('es-MX', { maximumFractionDigits: 0 })}`
     },
     {
-      field: 'actions', headerName: 'Movimiento', width: 120, sortable: false,
+      field: 'actions', headerName: 'Movement', width: 120, sortable: false,
       renderCell: ({ row }) => (
         <Button size="small" variant="outlined" onClick={() => setMovementDialog({ open: true, inventory: row })}>
-          Registrar
+          Register
         </Button>
       )
     }
@@ -69,19 +69,19 @@ export default function InventoryPage() {
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h5" fontWeight={700}>Inventario</Typography>
+        <Typography variant="h5" fontWeight={700}>Inventory</Typography>
         <Stack direction="row" spacing={1}>
           <Button variant="outlined" startIcon={<PlaylistAddIcon />} onClick={() => setInitDialog(true)}>
-            Inicializar
+            Initialize
           </Button>
         </Stack>
       </Box>
       <Card sx={{ mb: 2 }}>
         <CardContent>
           <FormControl size="small" sx={{ minWidth: 200 }}>
-            <InputLabel>Sucursal</InputLabel>
-            <Select value={branchId} label="Sucursal" onChange={e => { setBranchId(e.target.value); setPage(0) }}>
-              <MenuItem value="">Todas</MenuItem>
+            <InputLabel>Branch</InputLabel>
+            <Select value={branchId} label="Branch" onChange={e => { setBranchId(e.target.value); setPage(0) }}>
+              <MenuItem value="">All</MenuItem>
               {branches.map(b => <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>)}
             </Select>
           </FormControl>

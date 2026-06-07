@@ -29,31 +29,31 @@ export default function UsersPage() {
   useEffect(() => { load() }, [load])
 
   const handleDeactivate = async (id) => {
-    if (!confirm('¿Desactivar usuario?')) return
+    if (!confirm('Deactivate user?')) return
     try { await api.delete(`/users/${id}`); load() } catch (err) { alert(err.response?.data?.detail || 'Error') }
   }
 
   const ROLE_COLORS = { ADMIN: 'error', OPERATOR: 'primary', AUDITOR: 'warning' }
 
   const columns = [
-    { field: 'fullName', headerName: 'Nombre Completo', flex: 1, minWidth: 160 },
+    { field: 'fullName', headerName: 'Full Name', flex: 1, minWidth: 160 },
     { field: 'email', headerName: 'Email', width: 220 },
     {
       field: 'role', headerName: 'Rol', width: 110,
       renderCell: ({ value }) => <Chip label={value} color={ROLE_COLORS[value]} size="small" />
     },
     {
-      field: 'active', headerName: 'Estado', width: 100,
-      renderCell: ({ value }) => <Chip label={value ? 'Activo' : 'Inactivo'} color={value ? 'success' : 'default'} size="small" />
+      field: 'active', headerName: 'Status', width: 100,
+      renderCell: ({ value }) => <Chip label={value ? 'Active' : 'Inactive'} color={value ? 'success' : 'default'} size="small" />
     },
     {
-      field: 'createdAt', headerName: 'Creado', width: 140,
+      field: 'createdAt', headerName: 'Created', width: 140,
       valueFormatter: ({ value }) => value ? new Date(value).toLocaleDateString('es-MX') : ''
     },
     {
-      field: 'actions', headerName: 'Acciones', width: 100, sortable: false,
+      field: 'actions', headerName: 'Actions', width: 100, sortable: false,
       renderCell: ({ row }) => row.active && (
-        <Tooltip title="Desactivar">
+        <Tooltip title="Deactivate">
           <IconButton size="small" color="error" onClick={() => handleDeactivate(row.id)}>
             <PersonOffIcon fontSize="small" />
           </IconButton>
@@ -65,11 +65,11 @@ export default function UsersPage() {
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h5" fontWeight={700}>Usuarios</Typography>
+        <Typography variant="h5" fontWeight={700}>Users</Typography>
       </Box>
       <Card sx={{ mb: 2 }}>
         <CardContent>
-          <TextField size="small" placeholder="Buscar por nombre o email..."
+          <TextField size="small" placeholder="Search by name or email..."
             value={search} onChange={e => { setSearch(e.target.value); setPage(0) }}
             InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment> }}
             sx={{ width: { xs: '100%', sm: 360 } }} />

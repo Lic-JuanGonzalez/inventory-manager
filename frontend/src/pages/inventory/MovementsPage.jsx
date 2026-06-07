@@ -35,42 +35,42 @@ export default function MovementsPage() {
 
   const columns = [
     {
-      field: 'createdAt', headerName: 'Fecha', width: 160,
+      field: 'createdAt', headerName: 'Date', width: 160,
       valueFormatter: ({ value }) => new Date(value).toLocaleString('es-MX')
     },
     {
-      field: 'type', headerName: 'Tipo', width: 90,
+      field: 'type', headerName: 'Type', width: 90,
       renderCell: ({ value }) => <Chip label={value} color={TYPE_COLORS[value]} size="small" />
     },
     { field: 'reason', headerName: 'Motivo', width: 180 },
-    { field: 'productName', headerName: 'Producto', flex: 1, minWidth: 150 },
-    { field: 'branchName', headerName: 'Sucursal', width: 130 },
-    { field: 'quantity', headerName: 'Cantidad', width: 100, type: 'number' },
-    { field: 'stockBefore', headerName: 'Antes', width: 90, type: 'number' },
-    { field: 'stockAfter', headerName: 'Después', width: 90, type: 'number' },
-    { field: 'userFullName', headerName: 'Usuario', width: 150 },
+    { field: 'productName', headerName: 'Product', flex: 1, minWidth: 150 },
+    { field: 'branchName', headerName: 'Branch', width: 130 },
+    { field: 'quantity', headerName: 'Quantity', width: 100, type: 'number' },
+    { field: 'stockBefore', headerName: 'Before', width: 90, type: 'number' },
+    { field: 'stockAfter', headerName: 'After', width: 90, type: 'number' },
+    { field: 'userFullName', headerName: 'User', width: 150 },
     { field: 'observations', headerName: 'Observaciones', flex: 1, minWidth: 150 },
   ]
 
   return (
     <Box>
-      <Typography variant="h5" fontWeight={700} mb={3}>Historial de Movimientos</Typography>
+      <Typography variant="h5" fontWeight={700} mb={3}>Movement History</Typography>
       <Card sx={{ mb: 2 }}>
         <CardContent>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <FormControl size="small" sx={{ minWidth: 200 }}>
-              <InputLabel>Sucursal</InputLabel>
-              <Select value={branchId} label="Sucursal" onChange={e => { setBranchId(e.target.value); setPage(0) }}>
-                <MenuItem value="">Todas</MenuItem>
+              <InputLabel>Branch</InputLabel>
+              <Select value={branchId} label="Branch" onChange={e => { setBranchId(e.target.value); setPage(0) }}>
+                <MenuItem value="">All</MenuItem>
                 {branches.map(b => <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>)}
               </Select>
             </FormControl>
             <FormControl size="small" sx={{ minWidth: 140 }}>
-              <InputLabel>Tipo</InputLabel>
-              <Select value={type} label="Tipo" onChange={e => { setType(e.target.value); setPage(0) }}>
-                <MenuItem value="">Todos</MenuItem>
-                <MenuItem value="ENTRADA">Entrada</MenuItem>
-                <MenuItem value="SALIDA">Salida</MenuItem>
+              <InputLabel>Type</InputLabel>
+              <Select value={type} label="Type" onChange={e => { setType(e.target.value); setPage(0) }}>
+                <MenuItem value="">All</MenuItem>
+                <MenuItem value="ENTRADA">Inbound</MenuItem>
+                <MenuItem value="SALIDA">Outbound</MenuItem>
               </Select>
             </FormControl>
           </Stack>

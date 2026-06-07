@@ -44,7 +44,7 @@ export default function TransferFormDialog({ open, onClose, onSaved }) {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Nueva Transferencia</DialogTitle>
+      <DialogTitle>New Transfer</DialogTitle>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
@@ -53,8 +53,8 @@ export default function TransferFormDialog({ open, onClose, onSaved }) {
               <Controller name="originBranchId" control={control} rules={{ required: 'Requerido' }}
                 render={({ field }) => (
                   <FormControl fullWidth size="small" error={!!errors.originBranchId}>
-                    <InputLabel>Sucursal Origen *</InputLabel>
-                    <Select {...field} label="Sucursal Origen *">
+                    <InputLabel>Origin Branch *</InputLabel>
+                    <Select {...field} label="Origin Branch *">
                       {branches.map(b => <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>)}
                     </Select>
                   </FormControl>
@@ -64,8 +64,8 @@ export default function TransferFormDialog({ open, onClose, onSaved }) {
               <Controller name="destinationBranchId" control={control} rules={{ required: 'Requerido' }}
                 render={({ field }) => (
                   <FormControl fullWidth size="small" error={!!errors.destinationBranchId}>
-                    <InputLabel>Sucursal Destino *</InputLabel>
-                    <Select {...field} label="Sucursal Destino *">
+                    <InputLabel>Destination Branch *</InputLabel>
+                    <Select {...field} label="Destination Branch *">
                       {branches.map(b => <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>)}
                     </Select>
                   </FormControl>
@@ -75,8 +75,8 @@ export default function TransferFormDialog({ open, onClose, onSaved }) {
               <Controller name="productId" control={control} rules={{ required: 'Requerido' }}
                 render={({ field }) => (
                   <FormControl fullWidth size="small" error={!!errors.productId}>
-                    <InputLabel>Producto *</InputLabel>
-                    <Select {...field} label="Producto *">
+                    <InputLabel>Product *</InputLabel>
+                    <Select {...field} label="Product *">
                       {products.map(p => <MenuItem key={p.id} value={p.id}>{p.sku} - {p.name}</MenuItem>)}
                     </Select>
                   </FormControl>
@@ -84,9 +84,9 @@ export default function TransferFormDialog({ open, onClose, onSaved }) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Controller name="quantity" control={control}
-                rules={{ required: 'Cantidad requerida', min: { value: 0.001, message: 'Debe ser > 0' } }}
+                rules={{ required: 'Quantity required', min: { value: 0.001, message: 'Must be > 0' } }}
                 render={({ field }) => (
-                  <TextField {...field} label="Cantidad *" fullWidth size="small" type="number"
+                  <TextField {...field} label="Quantity *" fullWidth size="small" type="number"
                     inputProps={{ step: '0.001', min: '0.001' }}
                     error={!!errors.quantity} helperText={errors.quantity?.message} />
                 )} />
@@ -98,9 +98,9 @@ export default function TransferFormDialog({ open, onClose, onSaved }) {
           </Grid>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={onClose}>Cancelar</Button>
+          <Button onClick={onClose}>Cancel</Button>
           <Button type="submit" variant="contained" disabled={isSubmitting}>
-            {isSubmitting ? <CircularProgress size={20} /> : 'Solicitar Transferencia'}
+            {isSubmitting ? <CircularProgress size={20} /> : 'Request Transfer'}
           </Button>
         </DialogActions>
       </Box>

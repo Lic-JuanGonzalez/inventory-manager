@@ -44,20 +44,20 @@ export default function TransfersPage() {
 
   const columns = [
     {
-      field: 'requestDate', headerName: 'Fecha', width: 150,
+      field: 'requestDate', headerName: 'Date', width: 150,
       valueFormatter: ({ value }) => new Date(value).toLocaleDateString('es-MX')
     },
     { field: 'originBranchName', headerName: 'Origen', width: 130 },
     { field: 'destinationBranchName', headerName: 'Destino', width: 130 },
-    { field: 'productName', headerName: 'Producto', flex: 1, minWidth: 150 },
-    { field: 'quantity', headerName: 'Cantidad', width: 90, type: 'number' },
+    { field: 'productName', headerName: 'Product', flex: 1, minWidth: 150 },
+    { field: 'quantity', headerName: 'Quantity', width: 90, type: 'number' },
     {
-      field: 'status', headerName: 'Estado', width: 120,
+      field: 'status', headerName: 'Status', width: 120,
       renderCell: ({ value }) => <Chip label={value} color={STATUS_COLORS[value]} size="small" />
     },
-    { field: 'requestedByName', headerName: 'Solicitante', width: 140 },
+    { field: 'requestedByName', headerName: 'Requester', width: 140 },
     {
-      field: 'actions', headerName: 'Acciones', width: 160, sortable: false,
+      field: 'actions', headerName: 'Actions', width: 160, sortable: false,
       renderCell: ({ row }) => (
         <Stack direction="row" spacing={0.5}>
           {row.status === 'PENDIENTE' && isAdmin && (
@@ -82,7 +82,7 @@ export default function TransfersPage() {
             </Tooltip>
           )}
           {['PENDIENTE', 'APROBADA'].includes(row.status) && (
-            <Tooltip title="Cancelar">
+            <Tooltip title="Cancel">
               <IconButton size="small" color="error" onClick={() => doAction(transferApi.cancel, row.id)}>
                 <CancelIcon fontSize="small" />
               </IconButton>
@@ -96,17 +96,17 @@ export default function TransfersPage() {
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h5" fontWeight={700}>Transferencias</Typography>
+        <Typography variant="h5" fontWeight={700}>Transfers</Typography>
         <Button variant="contained" startIcon={<AddIcon />} onClick={() => setDialogOpen(true)}>
-          Nueva Transferencia
+          New Transfer
         </Button>
       </Box>
       <Card sx={{ mb: 2 }}>
         <CardContent>
           <FormControl size="small" sx={{ minWidth: 180 }}>
-            <InputLabel>Estado</InputLabel>
-            <Select value={status} label="Estado" onChange={e => { setStatus(e.target.value); setPage(0) }}>
-              <MenuItem value="">Todos</MenuItem>
+            <InputLabel>Status</InputLabel>
+            <Select value={status} label="Status" onChange={e => { setStatus(e.target.value); setPage(0) }}>
+              <MenuItem value="">All</MenuItem>
               {['PENDIENTE','APROBADA','EN_TRANSITO','RECIBIDA','CANCELADA'].map(s => (
                 <MenuItem key={s} value={s}>{s}</MenuItem>
               ))}

@@ -37,26 +37,26 @@ export default function BranchesPage() {
   const handleToggle = async (id) => { await branchApi.toggleActive(id); load() }
 
   const columns = [
-    { field: 'name', headerName: 'Nombre', flex: 1, minWidth: 160 },
-    { field: 'address', headerName: 'Dirección', flex: 1, minWidth: 180 },
-    { field: 'phone', headerName: 'Teléfono', width: 130 },
+    { field: 'name', headerName: 'Name', flex: 1, minWidth: 160 },
+    { field: 'address', headerName: 'Address', flex: 1, minWidth: 180 },
+    { field: 'phone', headerName: 'Phone', width: 130 },
     { field: 'email', headerName: 'Email', width: 200 },
     {
-      field: 'active', headerName: 'Estado', width: 100,
+      field: 'active', headerName: 'Status', width: 100,
       renderCell: ({ value }) => (
-        <Chip label={value ? 'Activa' : 'Inactiva'} color={value ? 'success' : 'default'} size="small" />
+        <Chip label={value ? 'Active' : 'Inactive'} color={value ? 'success' : 'default'} size="small" />
       )
     },
     {
-      field: 'actions', headerName: 'Acciones', width: 100, sortable: false,
+      field: 'actions', headerName: 'Actions', width: 100, sortable: false,
       renderCell: ({ row }) => canEdit && (
         <Stack direction="row">
-          <Tooltip title="Editar">
+          <Tooltip title="Edit">
             <IconButton size="small" onClick={() => { setSelected(row); setDialogOpen(true) }}>
               <EditIcon fontSize="small" />
             </IconButton>
           </Tooltip>
-          <Tooltip title={row.active ? 'Desactivar' : 'Activar'}>
+          <Tooltip title={row.active ? 'Deactivate' : 'Activate'}>
             <IconButton size="small" onClick={() => handleToggle(row.id)}>
               <PowerSettingsNewIcon fontSize="small" color={row.active ? 'success' : 'disabled'} />
             </IconButton>
@@ -69,17 +69,17 @@ export default function BranchesPage() {
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h5" fontWeight={700}>Sucursales</Typography>
+        <Typography variant="h5" fontWeight={700}>Branches</Typography>
         {canEdit && (
           <Button variant="contained" startIcon={<AddIcon />}
             onClick={() => { setSelected(null); setDialogOpen(true) }}>
-            Nueva Sucursal
+            New Branch
           </Button>
         )}
       </Box>
       <Card sx={{ mb: 2 }}>
         <CardContent>
-          <TextField size="small" placeholder="Buscar sucursal..."
+          <TextField size="small" placeholder="Search branch..."
             value={search} onChange={e => { setSearch(e.target.value); setPage(0) }}
             InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment> }}
             sx={{ width: { xs: '100%', sm: 360 } }} />

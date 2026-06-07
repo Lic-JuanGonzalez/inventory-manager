@@ -17,14 +17,14 @@ import { useAuth } from '../../context/AuthContext'
 
 const NAV_ITEMS = [
   { label: 'Dashboard',     icon: <DashboardIcon />,  path: '/dashboard',            roles: ['ADMIN','OPERATOR','AUDITOR'] },
-  { label: 'Productos',     icon: <CategoryIcon />,   path: '/products',             roles: ['ADMIN','OPERATOR','AUDITOR'] },
-  { label: 'Sucursales',    icon: <StorefrontIcon />, path: '/branches',             roles: ['ADMIN','OPERATOR','AUDITOR'] },
-  { label: 'Inventario',    icon: <InventoryIcon />,  path: '/inventory',            roles: ['ADMIN','OPERATOR','AUDITOR'] },
-  { label: 'Movimientos',   icon: <MoveToInboxIcon />,path: '/inventory/movements',  roles: ['ADMIN','OPERATOR','AUDITOR'] },
-  { label: 'Transferencias',icon: <SwapHorizIcon />,  path: '/transfers',            roles: ['ADMIN','OPERATOR'] },
+  { label: 'Products',      icon: <CategoryIcon />,   path: '/products',             roles: ['ADMIN','OPERATOR','AUDITOR'] },
+  { label: 'Branches',      icon: <StorefrontIcon />, path: '/branches',             roles: ['ADMIN','OPERATOR','AUDITOR'] },
+  { label: 'Inventory',     icon: <InventoryIcon />,  path: '/inventory',            roles: ['ADMIN','OPERATOR','AUDITOR'] },
+  { label: 'Movements',     icon: <MoveToInboxIcon />,path: '/inventory/movements',  roles: ['ADMIN','OPERATOR','AUDITOR'] },
+  { label: 'Transfers',     icon: <SwapHorizIcon />,  path: '/transfers',            roles: ['ADMIN','OPERATOR'] },
   { label: 'Reportes',      icon: <AssessmentIcon />, path: '/reports',              roles: ['ADMIN','AUDITOR'] },
-  { label: 'Auditoría',     icon: <SecurityIcon />,   path: '/audit',                roles: ['ADMIN','AUDITOR'] },
-  { label: 'Usuarios',      icon: <PeopleIcon />,     path: '/users',                roles: ['ADMIN'] },
+  { label: 'Audit',         icon: <SecurityIcon />,   path: '/audit',                roles: ['ADMIN','AUDITOR'] },
+  { label: 'Users',         icon: <PeopleIcon />,     path: '/users',                roles: ['ADMIN'] },
 ]
 
 export default function Sidebar({ drawerWidth, mobileOpen, onClose }) {
@@ -37,7 +37,7 @@ export default function Sidebar({ drawerWidth, mobileOpen, onClose }) {
       <Toolbar sx={{ bgcolor: 'primary.main' }}>
         <InventoryIcon sx={{ color: 'white', mr: 1 }} />
         <Typography variant="subtitle1" sx={{ color: 'white', fontWeight: 700 }}>
-          Inventario
+          Inventory
         </Typography>
       </Toolbar>
       <Divider />

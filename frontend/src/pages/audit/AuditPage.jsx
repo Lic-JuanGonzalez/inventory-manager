@@ -26,15 +26,15 @@ export default function AuditPage() {
 
   const columns = [
     {
-      field: 'createdAt', headerName: 'Fecha', width: 160,
+      field: 'createdAt', headerName: 'Date', width: 160,
       valueFormatter: ({ value }) => new Date(value).toLocaleString('es-MX')
     },
-    { field: 'userEmail', headerName: 'Usuario', width: 200 },
-    { field: 'action', headerName: 'Acción', width: 160 },
-    { field: 'entityName', headerName: 'Entidad', width: 130 },
-    { field: 'entityId', headerName: 'ID Entidad', width: 100 },
+    { field: 'userEmail', headerName: 'User', width: 200 },
+    { field: 'action', headerName: 'Action', width: 160 },
+    { field: 'entityName', headerName: 'Entity', width: 130 },
+    { field: 'entityId', headerName: 'Entity ID', width: 100 },
     {
-      field: 'status', headerName: 'Estado', width: 100,
+      field: 'status', headerName: 'Status', width: 100,
       renderCell: ({ value }) => (
         <Chip label={value} color={value === 'SUCCESS' ? 'success' : 'error'} size="small" />
       )
@@ -45,10 +45,10 @@ export default function AuditPage() {
 
   return (
     <Box>
-      <Typography variant="h5" fontWeight={700} mb={3}>Auditoría</Typography>
+      <Typography variant="h5" fontWeight={700} mb={3}>Audit</Typography>
       <Card sx={{ mb: 2 }}>
         <CardContent>
-          <TextField size="small" placeholder="Filtrar por acción..."
+          <TextField size="small" placeholder="Filter by action..."
             value={action} onChange={e => { setAction(e.target.value); setPage(0) }}
             InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment> }}
             sx={{ width: { xs: '100%', sm: 360 } }} />
