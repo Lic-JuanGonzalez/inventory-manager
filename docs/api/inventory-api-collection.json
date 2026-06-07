@@ -1116,7 +1116,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"sku\": \"TEST-API-001\",\n  \"name\": \"API Test Product\",\n  \"description\": \"Created via automated test\",\n  \"categoryId\": 1,\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 99.99\n}",
+              "raw": "{\n  \"sku\": \"TEST-API-001\",\n  \"name\": \"API Test Product\",\n  \"description\": \"Created via automated test\",\n  \"categoryId\": 1,\n  \"unitOfMeasure\": \"UNIT\",\n  \"referencePrice\": 99.99\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1169,7 +1169,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"sku\": \"LAP-001\",\n  \"name\": \"Laptop Duplicada\",\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 100.00\n}",
+              "raw": "{\n  \"sku\": \"LAP-001\",\n  \"name\": \"Duplicated Laptop\",\n  \"unitOfMeasure\": \"UNIT\",\n  \"referencePrice\": 100.00\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1274,7 +1274,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"sku\": \"TEST-API-001\",\n  \"name\": \"API Test Product Updated\",\n  \"description\": \"Updated description\",\n  \"categoryId\": 1,\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 149.99\n}",
+              "raw": "{\n  \"sku\": \"TEST-API-001\",\n  \"name\": \"API Test Product Updated\",\n  \"description\": \"Updated description\",\n  \"categoryId\": 1,\n  \"unitOfMeasure\": \"UNIT\",\n  \"referencePrice\": 149.99\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -3521,7 +3521,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"sku\": \"OP-TEST\",\n  \"name\": \"Unauthorized product\",\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 10.00\n}",
+              "raw": "{\n  \"sku\": \"OP-TEST\",\n  \"name\": \"Unauthorized product\",\n  \"unitOfMeasure\": \"UNIT\",\n  \"referencePrice\": 10.00\n}",
               "options": {
                 "raw": {
                   "language": "json"
