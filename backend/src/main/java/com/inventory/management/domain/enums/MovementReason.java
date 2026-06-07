@@ -2,20 +2,20 @@ package com.inventory.management.domain.enums;
 
 public enum MovementReason {
     // INBOUND
-    COMPRA,
-    DEVOLUCION_ENTRADA,
-    AJUSTE_POSITIVO,
-    TRANSFERENCIA_ENTRADA,
+    PURCHASE,
+    RETURN_INBOUND,
+    POSITIVE_ADJUSTMENT,
+    TRANSFER_INBOUND,
     // OUTBOUND
-    VENTA,
-    PERDIDA,
-    AJUSTE_NEGATIVO,
-    TRANSFERENCIA_SALIDA;
+    SALE,
+    LOSS,
+    NEGATIVE_ADJUSTMENT,
+    TRANSFER_OUTBOUND;
 
     public MovementType getExpectedType() {
         return switch (this) {
-            case COMPRA, DEVOLUCION_ENTRADA, AJUSTE_POSITIVO, TRANSFERENCIA_ENTRADA -> MovementType.ENTRADA;
-            case VENTA, PERDIDA, AJUSTE_NEGATIVO, TRANSFERENCIA_SALIDA             -> MovementType.SALIDA;
+            case PURCHASE, RETURN_INBOUND, POSITIVE_ADJUSTMENT, TRANSFER_INBOUND -> MovementType.INBOUND;
+            case SALE, LOSS, NEGATIVE_ADJUSTMENT, TRANSFER_OUTBOUND             -> MovementType.OUTBOUND;
         };
     }
 }

@@ -52,12 +52,12 @@ class InventoryServiceTest {
     @Test
     void registerMovement_entrada_increasesStock() {
         InventoryMovementRequest req = new InventoryMovementRequest(
-                1L, 1L, MovementReason.COMPRA, new BigDecimal("10"), "Test compra");
+                1L, 1L, MovementReason.PURCHASE, new BigDecimal("10"), "Test purchase");
 
         when(inventoryRepository.findByProductIdAndBranchId(1L, 1L)).thenReturn(Optional.of(inventory));
         InventoryMovement savedMovement = InventoryMovement.builder()
-                .id(1L).type(com.inventory.management.domain.enums.MovementType.ENTRADA)
-                .reason(MovementReason.COMPRA).quantity(new BigDecimal("10"))
+                .id(1L).type(com.inventory.management.domain.enums.MovementType.INBOUND)
+                .reason(MovementReason.PURCHASE).quantity(new BigDecimal("10"))
                 .stockBefore(new BigDecimal("50")).stockAfter(new BigDecimal("60"))
                 .product(product).branch(branch).user(user).build();
         when(movementRepository.save(any())).thenReturn(savedMovement);
@@ -66,18 +66,18 @@ class InventoryServiceTest {
         MovementResponse response = inventoryService.registerMovement(req, user);
 
         assertThat(inventory.getCurrentStock()).isEqualByComparingTo(new BigDecimal("60"));
-        assertThat(response.type()).isEqualTo(com.inventory.management.domain.enums.MovementType.ENTRADA);
+        assertThat(response.type()).isEqualTo(com.inventory.management.domain.enums.MovementType.INBOUND);
     }
 
     @Test
     void registerMovement_salida_decreasesStock() {
         InventoryMovementRequest req = new InventoryMovementRequest(
-                1L, 1L, MovementReason.VENTA, new BigDecimal("20"), "Venta");
+                1L, 1L, MovementReason.SALE, new BigDecimal("20"), "Sale");
 
         when(inventoryRepository.findByProductIdAndBranchId(1L, 1L)).thenReturn(Optional.of(inventory));
         InventoryMovement savedMovement = InventoryMovement.builder()
-                .id(2L).type(com.inventory.management.domain.enums.MovementType.SALIDA)
-                .reason(MovementReason.VENTA).quantity(new BigDecimal("20"))
+                .id(2L).type(com.inventory.management.domain.enums.MovementType.OUTBOUND)
+                .reason(MovementReason.SALE).quantity(new BigDecimal("20"))
                 .stockBefore(new BigDecimal("50")).stockAfter(new BigDecimal("30"))
                 .product(product).branch(branch).user(user).build();
         when(movementRepository.save(any())).thenReturn(savedMovement);
@@ -91,7 +91,7 @@ class InventoryServiceTest {
     @Test
     void registerMovement_insufficientStock_throwsException() {
         InventoryMovementRequest req = new InventoryMovementRequest(
-                1L, 1L, MovementReason.VENTA, new BigDecimal("100"), null);
+                1L, 1L, MovementReason.SALE, new BigDecimal("100"), null);
 
         when(inventoryRepository.findByProductIdAndBranchId(1L, 1L)).thenReturn(Optional.of(inventory));
 
@@ -105,7 +105,7 @@ class InventoryServiceTest {
     @Test
     void registerMovement_noInventory_throwsNotFoundException() {
         InventoryMovementRequest req = new InventoryMovementRequest(
-                99L, 99L, MovementReason.COMPRA, BigDecimal.ONE, null);
+                99L, 99L, MovementReason.PURCHASE, BigDecimal.ONE, null);
 
         when(inventoryRepository.findByProductIdAndBranchId(99L, 99L)).thenReturn(Optional.empty());
 

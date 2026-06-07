@@ -1,8 +1,8 @@
 {
   "info": {
     "_postman_id": "inv-mgmt-api-collection-v1",
-    "name": "Sistema de Inventario - API Collection",
-    "description": "Coleccion completa para el Sistema de Gestion de Inventario Multi-Sucursal.\n\nBase URL: http://localhost/api\n\nOrden de ejecucion recomendado:\n1. Auth > Login Admin (guarda tokens automaticamente)\n2. Usuarios > Crear Operador (guarda newUserId)\n3. Productos > Crear Producto (guarda newProductId)\n4. Sucursales > Crear Sucursal (guarda newBranchId)\n5. Inventario > Inicializar > Movimientos\n6. Transferencias > Ciclo completo PENDIENTE > APROBADA > EN_TRANSITO > RECIBIDA\n7. Auditoria\n8. Seguridad",
+    "name": "Inventory System - API Collection",
+    "description": "Complete collection for the Multi-Branch Inventory Management System.\n\nBase URL: http://localhost/api\n\nRecommended execution order:\n1. Auth > Login Admin (guarda tokens automaticamente)\n2. Users > Create Operator (saves newUserId)\n3. Products > Create Product (saves newProductId)\n4. Branches > Create Branch (saves newBranchId)\n5. Inventory > Initialize > Movements\n6. Transfers > Full cycle PENDING > APPROVED > IN_TRANSIT > RECEIVED\n7. Audit\n8. Security",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -122,7 +122,7 @@
           }
         },
         {
-          "name": "Login - Contrasena incorrecta",
+          "name": "Login - Wrong password",
           "event": [
             {
               "listen": "test",
@@ -167,7 +167,7 @@
           }
         },
         {
-          "name": "Login - Usuario no existe",
+          "name": "Login - User not found",
           "event": [
             {
               "listen": "test",
@@ -407,10 +407,10 @@
       ]
     },
     {
-      "name": "Usuarios",
+      "name": "Users",
       "item": [
         {
-          "name": "Listar usuarios",
+          "name": "List users",
           "event": [
             {
               "listen": "test",
@@ -453,7 +453,7 @@
           }
         },
         {
-          "name": "Listar usuarios - busqueda por nombre",
+          "name": "List users - busqueda por nombre",
           "event": [
             {
               "listen": "test",
@@ -499,7 +499,7 @@
           }
         },
         {
-          "name": "Listar usuarios - solo activos",
+          "name": "List users - solo activos",
           "event": [
             {
               "listen": "test",
@@ -545,7 +545,7 @@
           }
         },
         {
-          "name": "Obtener usuario por ID",
+          "name": "Get user by ID",
           "event": [
             {
               "listen": "test",
@@ -587,7 +587,7 @@
           }
         },
         {
-          "name": "Obtener usuario - No existe",
+          "name": "Get user - Not found",
           "event": [
             {
               "listen": "test",
@@ -624,7 +624,7 @@
           }
         },
         {
-          "name": "Crear usuario - OPERATOR",
+          "name": "Create user - OPERATOR",
           "event": [
             {
               "listen": "test",
@@ -632,7 +632,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Usuario creado con ID', () => {",
+                  "pm.test('User created with ID', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('id');",
                   "    pm.expect(j.email).to.eql('juan.operador@test.com');",
@@ -681,7 +681,7 @@
           }
         },
         {
-          "name": "Crear usuario - Email duplicado",
+          "name": "Create user - Duplicate email",
           "event": [
             {
               "listen": "test",
@@ -734,7 +734,7 @@
           }
         },
         {
-          "name": "Crear usuario - Datos invalidos",
+          "name": "Create user - Invalid data",
           "event": [
             {
               "listen": "test",
@@ -785,7 +785,7 @@
           }
         },
         {
-          "name": "Actualizar usuario",
+          "name": "Update user",
           "event": [
             {
               "listen": "test",
@@ -841,7 +841,7 @@
           }
         },
         {
-          "name": "Desactivar usuario",
+          "name": "Deactivate user",
           "event": [
             {
               "listen": "test",
@@ -880,10 +880,10 @@
       ]
     },
     {
-      "name": "Productos",
+      "name": "Products",
       "item": [
         {
-          "name": "Listar productos",
+          "name": "List products",
           "event": [
             {
               "listen": "test",
@@ -891,7 +891,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Tiene productos seed', () => {",
+                  "pm.test('Has seed products', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j.content).to.be.an('array');",
                   "    pm.expect(j.totalElements).to.be.at.least(5);",
@@ -924,7 +924,7 @@
           }
         },
         {
-          "name": "Listar productos - busqueda",
+          "name": "List products - busqueda",
           "event": [
             {
               "listen": "test",
@@ -967,7 +967,7 @@
           }
         },
         {
-          "name": "Listar productos - por categoria",
+          "name": "List products - por categoria",
           "event": [
             {
               "listen": "test",
@@ -1009,7 +1009,7 @@
           }
         },
         {
-          "name": "Obtener producto por ID",
+          "name": "Get product by ID",
           "event": [
             {
               "listen": "test",
@@ -1050,7 +1050,7 @@
           }
         },
         {
-          "name": "Obtener producto - No existe",
+          "name": "Get product - Not found",
           "event": [
             {
               "listen": "test",
@@ -1087,7 +1087,7 @@
           }
         },
         {
-          "name": "Crear producto",
+          "name": "Create product",
           "event": [
             {
               "listen": "test",
@@ -1095,7 +1095,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Producto creado', () => {",
+                  "pm.test('Product created', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('id');",
                   "    pm.expect(j.sku).to.eql('TEST-API-001');",
@@ -1116,7 +1116,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"sku\": \"TEST-API-001\",\n  \"name\": \"Producto de Prueba API\",\n  \"description\": \"Creado via test automatizado\",\n  \"categoryId\": 1,\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 99.99\n}",
+              "raw": "{\n  \"sku\": \"TEST-API-001\",\n  \"name\": \"API Test Product\",\n  \"description\": \"Created via automated test\",\n  \"categoryId\": 1,\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 99.99\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1145,7 +1145,7 @@
           }
         },
         {
-          "name": "Crear producto - SKU duplicado",
+          "name": "Create product - SKU duplicado",
           "event": [
             {
               "listen": "test",
@@ -1198,7 +1198,7 @@
           }
         },
         {
-          "name": "Crear producto - Datos invalidos",
+          "name": "Create product - Datos invalidos",
           "event": [
             {
               "listen": "test",
@@ -1249,7 +1249,7 @@
           }
         },
         {
-          "name": "Actualizar producto",
+          "name": "Update product",
           "event": [
             {
               "listen": "test",
@@ -1274,7 +1274,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"sku\": \"TEST-API-001\",\n  \"name\": \"Producto de Prueba API Actualizado\",\n  \"description\": \"Descripcion actualizada\",\n  \"categoryId\": 1,\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 149.99\n}",
+              "raw": "{\n  \"sku\": \"TEST-API-001\",\n  \"name\": \"API Test Product Actualizado\",\n  \"description\": \"Updated description\",\n  \"categoryId\": 1,\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 149.99\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1304,7 +1304,7 @@
           }
         },
         {
-          "name": "Toggle activo - producto",
+          "name": "Toggle active - product",
           "event": [
             {
               "listen": "test",
@@ -1344,10 +1344,10 @@
       ]
     },
     {
-      "name": "Sucursales",
+      "name": "Branches",
       "item": [
         {
-          "name": "Listar sucursales",
+          "name": "List branches",
           "event": [
             {
               "listen": "test",
@@ -1355,7 +1355,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Tiene sucursales seed', () => {",
+                  "pm.test('Has seed branches', () => {",
                   "    pm.expect(pm.response.json().totalElements).to.be.at.least(5);",
                   "});"
                 ]
@@ -1386,7 +1386,7 @@
           }
         },
         {
-          "name": "Listar sucursales activas",
+          "name": "List branches activas",
           "event": [
             {
               "listen": "test",
@@ -1428,7 +1428,7 @@
           }
         },
         {
-          "name": "Listar sucursales - busqueda",
+          "name": "List branches - busqueda",
           "event": [
             {
               "listen": "test",
@@ -1471,7 +1471,7 @@
           }
         },
         {
-          "name": "Obtener sucursal por ID",
+          "name": "Get branch by ID",
           "event": [
             {
               "listen": "test",
@@ -1512,7 +1512,7 @@
           }
         },
         {
-          "name": "Obtener sucursal - No existe",
+          "name": "Get branch - Not found",
           "event": [
             {
               "listen": "test",
@@ -1549,7 +1549,7 @@
           }
         },
         {
-          "name": "Crear sucursal",
+          "name": "Create branch",
           "event": [
             {
               "listen": "test",
@@ -1557,10 +1557,10 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Sucursal creada', () => {",
+                  "pm.test('Branch created', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('id');",
-                  "    pm.expect(j.name).to.eql('Sucursal Test API');",
+                  "    pm.expect(j.name).to.eql('API Test Branch');",
                   "    pm.environment.set('newBranchId', String(j.id));",
                   "});"
                 ]
@@ -1577,7 +1577,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Sucursal Test API\",\n  \"address\": \"Calle Test 123, Ciudad\",\n  \"phone\": \"555-9999\",\n  \"email\": \"testapi@empresa.com\"\n}",
+              "raw": "{\n  \"name\": \"API Test Branch\",\n  \"address\": \"Calle Test 123, Ciudad\",\n  \"phone\": \"555-9999\",\n  \"email\": \"testapi@empresa.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1606,7 +1606,7 @@
           }
         },
         {
-          "name": "Crear sucursal - Datos invalidos",
+          "name": "Create branch - Datos invalidos",
           "event": [
             {
               "listen": "test",
@@ -1657,7 +1657,7 @@
           }
         },
         {
-          "name": "Actualizar sucursal",
+          "name": "Update branch",
           "event": [
             {
               "listen": "test",
@@ -1666,7 +1666,7 @@
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
                   "pm.test('Nombre actualizado', () => {",
-                  "    pm.expect(pm.response.json().name).to.eql('Sucursal Test API Actualizada');",
+                  "    pm.expect(pm.response.json().name).to.eql('API Test Branch Actualizada');",
                   "});"
                 ]
               }
@@ -1682,7 +1682,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Sucursal Test API Actualizada\",\n  \"address\": \"Calle Nueva 456, Ciudad\",\n  \"phone\": \"555-8888\",\n  \"email\": \"testapi2@empresa.com\"\n}",
+              "raw": "{\n  \"name\": \"API Test Branch Actualizada\",\n  \"address\": \"Calle Nueva 456, Ciudad\",\n  \"phone\": \"555-8888\",\n  \"email\": \"testapi2@empresa.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1712,7 +1712,7 @@
           }
         },
         {
-          "name": "Toggle activo - sucursal",
+          "name": "Toggle active - branch",
           "event": [
             {
               "listen": "test",
@@ -1752,10 +1752,10 @@
       ]
     },
     {
-      "name": "Inventario",
+      "name": "Inventory",
       "item": [
         {
-          "name": "Listar inventario",
+          "name": "List inventory",
           "event": [
             {
               "listen": "test",
@@ -1795,7 +1795,7 @@
           }
         },
         {
-          "name": "Listar inventario - filtrar por sucursal",
+          "name": "List inventory - filtrar por sucursal",
           "event": [
             {
               "listen": "test",
@@ -1837,7 +1837,7 @@
           }
         },
         {
-          "name": "Listar inventario - filtrar por producto",
+          "name": "List inventory - filtrar por producto",
           "event": [
             {
               "listen": "test",
@@ -1917,7 +1917,7 @@
           }
         },
         {
-          "name": "Inicializar inventario",
+          "name": "Initialize inventory",
           "event": [
             {
               "listen": "test",
@@ -1925,7 +1925,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Inventario inicializado', () => {",
+                  "pm.test('Inventory inicializado', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('id');",
                   "    pm.expect(j.currentStock).to.eql(50);",
@@ -1974,7 +1974,7 @@
           }
         },
         {
-          "name": "Inicializar inventario - ya existe",
+          "name": "Initialize inventory - ya existe",
           "event": [
             {
               "listen": "test",
@@ -2028,7 +2028,7 @@
           }
         },
         {
-          "name": "Movimiento - ENTRADA (COMPRA)",
+          "name": "Movement - INBOUND (PURCHASE)",
           "event": [
             {
               "listen": "test",
@@ -2036,10 +2036,10 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Tipo ENTRADA', () => {",
+                  "pm.test('Tipo INBOUND', () => {",
                   "    const j = pm.response.json();",
-                  "    pm.expect(j.type).to.eql('ENTRADA');",
-                  "    pm.expect(j.reason).to.eql('COMPRA');",
+                  "    pm.expect(j.type).to.eql('INBOUND');",
+                  "    pm.expect(j.reason).to.eql('PURCHASE');",
                   "    pm.expect(j.quantity).to.eql(10);",
                   "});"
                 ]
@@ -2056,7 +2056,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"productId\": 1,\n  \"branchId\": 1,\n  \"reason\": \"COMPRA\",\n  \"quantity\": 10,\n  \"observations\": \"Reposicion de stock via test\"\n}",
+              "raw": "{\n  \"productId\": 1,\n  \"branchId\": 1,\n  \"reason\": \"PURCHASE\",\n  \"quantity\": 10,\n  \"observations\": \"Stock replenishment via test\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2086,7 +2086,7 @@
           }
         },
         {
-          "name": "Movimiento - ENTRADA (DEVOLUCION)",
+          "name": "Movement - INBOUND (DEVOLUCION)",
           "event": [
             {
               "listen": "test",
@@ -2094,8 +2094,8 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Tipo ENTRADA devolucion', () => {",
-                  "    pm.expect(pm.response.json().reason).to.eql('DEVOLUCION_ENTRADA');",
+                  "pm.test('Tipo INBOUND devolucion', () => {",
+                  "    pm.expect(pm.response.json().reason).to.eql('RETURN_INBOUND');",
                   "});"
                 ]
               }
@@ -2111,7 +2111,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"productId\": 1,\n  \"branchId\": 1,\n  \"reason\": \"DEVOLUCION_ENTRADA\",\n  \"quantity\": 2,\n  \"observations\": \"Devolucion de cliente\"\n}",
+              "raw": "{\n  \"productId\": 1,\n  \"branchId\": 1,\n  \"reason\": \"RETURN_INBOUND\",\n  \"quantity\": 2,\n  \"observations\": \"Customer return\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2141,7 +2141,7 @@
           }
         },
         {
-          "name": "Movimiento - SALIDA (VENTA)",
+          "name": "Movement - OUTBOUND (SALE)",
           "event": [
             {
               "listen": "test",
@@ -2149,10 +2149,10 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Tipo SALIDA', () => {",
+                  "pm.test('Tipo OUTBOUND', () => {",
                   "    const j = pm.response.json();",
-                  "    pm.expect(j.type).to.eql('SALIDA');",
-                  "    pm.expect(j.reason).to.eql('VENTA');",
+                  "    pm.expect(j.type).to.eql('OUTBOUND');",
+                  "    pm.expect(j.reason).to.eql('SALE');",
                   "});"
                 ]
               }
@@ -2168,7 +2168,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"productId\": 1,\n  \"branchId\": 1,\n  \"reason\": \"VENTA\",\n  \"quantity\": 2,\n  \"observations\": \"Venta a cliente final\"\n}",
+              "raw": "{\n  \"productId\": 1,\n  \"branchId\": 1,\n  \"reason\": \"SALE\",\n  \"quantity\": 2,\n  \"observations\": \"Sale to end customer\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2198,7 +2198,7 @@
           }
         },
         {
-          "name": "Movimiento - SALIDA (PERDIDA)",
+          "name": "Movement - OUTBOUND (LOSS)",
           "event": [
             {
               "listen": "test",
@@ -2206,7 +2206,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Tipo PERDIDA', () => pm.expect(pm.response.json().reason).to.eql('PERDIDA'));"
+                  "pm.test('Type LOSS', () => pm.expect(pm.response.json().reason).to.eql('LOSS'));"
                 ]
               }
             }
@@ -2221,7 +2221,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"productId\": 1,\n  \"branchId\": 1,\n  \"reason\": \"PERDIDA\",\n  \"quantity\": 1,\n  \"observations\": \"Producto danado\"\n}",
+              "raw": "{\n  \"productId\": 1,\n  \"branchId\": 1,\n  \"reason\": \"LOSS\",\n  \"quantity\": 1,\n  \"observations\": \"Damaged product\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2275,7 +2275,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"productId\": 1,\n  \"branchId\": 1,\n  \"reason\": \"VENTA\",\n  \"quantity\": 999999,\n  \"observations\": \"Test stock insuficiente\"\n}",
+              "raw": "{\n  \"productId\": 1,\n  \"branchId\": 1,\n  \"reason\": \"SALE\",\n  \"quantity\": 999999,\n  \"observations\": \"Test insufficient stock\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2305,7 +2305,7 @@
           }
         },
         {
-          "name": "Movimiento - Razon invalida",
+          "name": "Movement - Invalid reason",
           "event": [
             {
               "listen": "test",
@@ -2395,7 +2395,7 @@
           }
         },
         {
-          "name": "Listar movimientos - filtrar ENTRADA",
+          "name": "Listar movimientos - filtrar INBOUND",
           "event": [
             {
               "listen": "test",
@@ -2403,8 +2403,8 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Solo ENTRADA', () => {",
-                  "    pm.response.json().content.forEach(m => pm.expect(m.type).to.eql('ENTRADA'));",
+                  "pm.test('Solo INBOUND', () => {",
+                  "    pm.response.json().content.forEach(m => pm.expect(m.type).to.eql('INBOUND'));",
                   "});"
                 ]
               }
@@ -2413,7 +2413,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/inventory/movements?type=ENTRADA",
+              "raw": "{{baseUrl}}/inventory/movements?type=INBOUND",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2424,7 +2424,7 @@
               "query": [
                 {
                   "key": "type",
-                  "value": "ENTRADA"
+                  "value": "INBOUND"
                 }
               ]
             },
@@ -2486,10 +2486,10 @@
       ]
     },
     {
-      "name": "Transferencias",
+      "name": "Transfers",
       "item": [
         {
-          "name": "Listar transferencias",
+          "name": "List transfers",
           "event": [
             {
               "listen": "test",
@@ -2526,7 +2526,7 @@
           }
         },
         {
-          "name": "Listar transferencias - filtrar por estado",
+          "name": "List transfers - filtrar por estado",
           "event": [
             {
               "listen": "test",
@@ -2541,7 +2541,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/transfers?status=PENDIENTE",
+              "raw": "{{baseUrl}}/transfers?status=PENDING",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -2551,7 +2551,7 @@
               "query": [
                 {
                   "key": "status",
-                  "value": "PENDIENTE"
+                  "value": "PENDING"
                 }
               ]
             },
@@ -2568,7 +2568,7 @@
           }
         },
         {
-          "name": "Listar transferencias pendientes",
+          "name": "List transfers pendientes",
           "event": [
             {
               "listen": "test",
@@ -2606,7 +2606,7 @@
           }
         },
         {
-          "name": "Crear transferencia (ciclo completo)",
+          "name": "Create transfer (ciclo completo)",
           "event": [
             {
               "listen": "test",
@@ -2614,9 +2614,9 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Estado PENDIENTE', () => {",
+                  "pm.test('Status PENDING', () => {",
                   "    const j = pm.response.json();",
-                  "    pm.expect(j.status).to.eql('PENDIENTE');",
+                  "    pm.expect(j.status).to.eql('PENDING');",
                   "    pm.expect(j).to.have.property('id');",
                   "    pm.environment.set('transferId', String(j.id));",
                   "});"
@@ -2663,7 +2663,7 @@
           }
         },
         {
-          "name": "Crear transferencia (para cancelar)",
+          "name": "Create transfer (para cancelar)",
           "event": [
             {
               "listen": "test",
@@ -2717,7 +2717,7 @@
           }
         },
         {
-          "name": "Crear transferencia - misma sucursal",
+          "name": "Create transfer - misma sucursal",
           "event": [
             {
               "listen": "test",
@@ -2770,7 +2770,7 @@
           }
         },
         {
-          "name": "Crear transferencia - stock insuficiente",
+          "name": "Create transfer - stock insuficiente",
           "event": [
             {
               "listen": "test",
@@ -2823,7 +2823,7 @@
           }
         },
         {
-          "name": "Obtener transferencia por ID",
+          "name": "Get transfer by ID",
           "event": [
             {
               "listen": "test",
@@ -2863,7 +2863,7 @@
           }
         },
         {
-          "name": "Aprobar transferencia",
+          "name": "Approve transfer",
           "event": [
             {
               "listen": "test",
@@ -2871,7 +2871,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Estado APROBADA', () => pm.expect(pm.response.json().status).to.eql('APROBADA'));"
+                  "pm.test('Status APPROVED', () => pm.expect(pm.response.json().status).to.eql('APPROVED'));"
                 ]
               }
             }
@@ -2902,7 +2902,7 @@
           }
         },
         {
-          "name": "Enviar transferencia",
+          "name": "Ship transfer",
           "event": [
             {
               "listen": "test",
@@ -2910,7 +2910,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Estado EN_TRANSITO', () => pm.expect(pm.response.json().status).to.eql('EN_TRANSITO'));"
+                  "pm.test('Status IN_TRANSIT', () => pm.expect(pm.response.json().status).to.eql('IN_TRANSIT'));"
                 ]
               }
             }
@@ -2941,7 +2941,7 @@
           }
         },
         {
-          "name": "Recibir transferencia",
+          "name": "Receive transfer",
           "event": [
             {
               "listen": "test",
@@ -2949,7 +2949,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Estado RECIBIDA', () => pm.expect(pm.response.json().status).to.eql('RECIBIDA'));"
+                  "pm.test('Status RECEIVED', () => pm.expect(pm.response.json().status).to.eql('RECEIVED'));"
                 ]
               }
             }
@@ -2987,7 +2987,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 4xx (no se puede cancelar RECIBIDA)', () => {",
+                  "pm.test('Status 4xx (cannot cancel RECEIVED transfer)', () => {",
                   "    pm.expect(pm.response.code).to.be.oneOf([400, 409, 422]);",
                   "});"
                 ]
@@ -3020,7 +3020,7 @@
           }
         },
         {
-          "name": "Cancelar transferencia (PENDIENTE)",
+          "name": "Cancel transfer (PENDING)",
           "event": [
             {
               "listen": "test",
@@ -3028,7 +3028,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Estado CANCELADA', () => pm.expect(pm.response.json().status).to.eql('CANCELADA'));"
+                  "pm.test('Status CANCELLED', () => pm.expect(pm.response.json().status).to.eql('CANCELLED'));"
                 ]
               }
             }
@@ -3061,10 +3061,10 @@
       ]
     },
     {
-      "name": "Auditoria",
+      "name": "Audit",
       "item": [
         {
-          "name": "Listar logs de auditoria",
+          "name": "List audit logs de auditoria",
           "event": [
             {
               "listen": "test",
@@ -3105,7 +3105,7 @@
           }
         },
         {
-          "name": "Auditoria - filtrar por accion CREATE",
+          "name": "Audit - filtrar por accion CREATE",
           "event": [
             {
               "listen": "test",
@@ -3147,7 +3147,7 @@
           }
         },
         {
-          "name": "Auditoria - filtrar por entidad Product",
+          "name": "Audit - filtrar por entidad Product",
           "event": [
             {
               "listen": "test",
@@ -3189,7 +3189,7 @@
           }
         },
         {
-          "name": "Auditoria - filtrar por usuario",
+          "name": "Audit - filtrar por usuario",
           "event": [
             {
               "listen": "test",
@@ -3231,7 +3231,7 @@
           }
         },
         {
-          "name": "Auditoria - rango de fechas",
+          "name": "Audit - rango de fechas",
           "event": [
             {
               "listen": "test",
@@ -3279,7 +3279,7 @@
       ]
     },
     {
-      "name": "Seguridad - Autorizacion",
+      "name": "Security - Autorizacion",
       "item": [
         {
           "name": "Sin token - debe retornar 401",

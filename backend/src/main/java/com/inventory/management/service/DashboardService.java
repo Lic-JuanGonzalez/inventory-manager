@@ -31,7 +31,7 @@ public class DashboardService {
         Instant monthStart = Instant.now().minus(30, ChronoUnit.DAYS);
 
         var lowStockItems    = inventoryRepository.findLowStockItems();
-        var pendingTransfers = transferRepository.findByStatus(TransferStatus.PENDIENTE);
+        var pendingTransfers = transferRepository.findByStatus(TransferStatus.PENDING);
         long monthlyMovements = movementRepository.countByDateRange(monthStart, Instant.now());
         BigDecimal totalValue = inventoryRepository.calculateTotalValue(null);
 

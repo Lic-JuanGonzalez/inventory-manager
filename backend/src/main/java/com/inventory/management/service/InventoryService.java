@@ -82,7 +82,7 @@ public class InventoryService {
 
         BigDecimal stockBefore = inventory.getCurrentStock();
 
-        if (expectedType == MovementType.SALIDA) {
+        if (expectedType == MovementType.OUTBOUND) {
             if (inventory.getCurrentStock().compareTo(req.quantity()) < 0) {
                 throw new InsufficientStockException(
                         inventory.getProduct().getSku(),
@@ -133,7 +133,7 @@ public class InventoryService {
                                               com.inventory.management.domain.enums.MovementReason reason,
                                               User user, TransferRequest transferRequest) {
         BigDecimal stockBefore = inventory.getCurrentStock();
-        if (reason.getExpectedType() == MovementType.SALIDA) {
+        if (reason.getExpectedType() == MovementType.OUTBOUND) {
             inventory.subtractStock(quantity);
         } else {
             inventory.addStock(quantity);

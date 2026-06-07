@@ -1,9 +1,9 @@
 package com.inventory.management.domain.enums;
 
 public enum TransferStatus {
-    PENDIENTE,
-    APROBADA,
-    EN_TRANSITO,
-    RECIBIDA,
-    CANCELADA
+    PENDING,
+    APPROVED,
+    IN_TRANSIT,
+    RECEIVED,
+    CANCELLED
 }

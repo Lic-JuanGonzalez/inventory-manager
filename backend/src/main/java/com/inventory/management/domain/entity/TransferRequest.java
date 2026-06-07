@@ -35,7 +35,7 @@ public class TransferRequest {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     @Builder.Default
-    private TransferStatus status = TransferStatus.PENDIENTE;
+    private TransferStatus status = TransferStatus.PENDING;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "requested_by_id", nullable = false)

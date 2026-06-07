@@ -44,7 +44,7 @@ public class TransferService {
 
     @Transactional(readOnly = true)
     public List<TransferResponse> findPending() {
-        return transferRepository.findByStatus(TransferStatus.PENDIENTE)
+        return transferRepository.findByStatus(TransferStatus.PENDING)
                 .stream().map(this::toResponse).toList();
     }
 
@@ -76,7 +76,7 @@ public class TransferService {
                 .quantity(req.quantity())
                 .requestedBy(requestedBy)
                 .notes(req.notes())
-                .status(TransferStatus.PENDIENTE)
+                .status(TransferStatus.PENDING)
                 .build();
         transfer = transferRepository.save(transfer);
 
@@ -88,9 +88,9 @@ public class TransferService {
     @Transactional
     public TransferResponse approve(Long id, User approvedBy) {
         TransferRequest transfer = getOrThrow(id);
-        assertStatus(transfer, TransferStatus.PENDIENTE, "approve");
+        assertStatus(transfer, TransferStatus.PENDING, "approve");
 
-        transfer.setStatus(TransferStatus.APROBADA);
+        transfer.setStatus(TransferStatus.APPROVED);
         transfer.setApprovedBy(approvedBy);
         transfer.setApprovalDate(Instant.now());
         transfer = transferRepository.save(transfer);
@@ -103,7 +103,7 @@ public class TransferService {
     @Transactional
     public TransferResponse ship(Long id, User shippedBy) {
         TransferRequest transfer = getOrThrow(id);
-        assertStatus(transfer, TransferStatus.APROBADA, "ship");
+        assertStatus(transfer, TransferStatus.APPROVED, "ship");
 
         Inventory originInventory = inventoryService.getInventoryOrThrow(
                 transfer.getProduct().getId(), transfer.getOriginBranch().getId());
@@ -118,10 +118,10 @@ public class TransferService {
         }
 
         inventoryService.createTransferMovement(
-                originInventory, transfer.getQuantity(), MovementReason.TRANSFERENCIA_SALIDA,
+                originInventory, transfer.getQuantity(), MovementReason.TRANSFER_OUTBOUND,
                 shippedBy, transfer);
 
-        transfer.setStatus(TransferStatus.EN_TRANSITO);
+        transfer.setStatus(TransferStatus.IN_TRANSIT);
         transfer.setShipDate(Instant.now());
         transfer = transferRepository.save(transfer);
 
@@ -133,16 +133,16 @@ public class TransferService {
     @Transactional
     public TransferResponse receive(Long id, User receivedBy) {
         TransferRequest transfer = getOrThrow(id);
-        assertStatus(transfer, TransferStatus.EN_TRANSITO, "receive");
+        assertStatus(transfer, TransferStatus.IN_TRANSIT, "receive");
 
         Inventory destInventory = inventoryService.getInventoryOrThrow(
                 transfer.getProduct().getId(), transfer.getDestinationBranch().getId());
 
         inventoryService.createTransferMovement(
-                destInventory, transfer.getQuantity(), MovementReason.TRANSFERENCIA_ENTRADA,
+                destInventory, transfer.getQuantity(), MovementReason.TRANSFER_INBOUND,
                 receivedBy, transfer);
 
-        transfer.setStatus(TransferStatus.RECIBIDA);
+        transfer.setStatus(TransferStatus.RECEIVED);
         transfer.setReceptionDate(Instant.now());
         transfer = transferRepository.save(transfer);
 
@@ -154,11 +154,11 @@ public class TransferService {
     @Transactional
     public TransferResponse cancel(Long id, User cancelledBy) {
         TransferRequest transfer = getOrThrow(id);
-        if (transfer.getStatus() == TransferStatus.RECIBIDA ||
-            transfer.getStatus() == TransferStatus.CANCELADA) {
+        if (transfer.getStatus() == TransferStatus.RECEIVED ||
+            transfer.getStatus() == TransferStatus.CANCELLED) {
             throw new BusinessException("Cannot cancel a transfer with status " + transfer.getStatus());
         }
-        transfer.setStatus(TransferStatus.CANCELADA);
+        transfer.setStatus(TransferStatus.CANCELLED);
         transfer = transferRepository.save(transfer);
 
         auditService.logAsync(cancelledBy, "CANCEL_TRANSFER", "TRANSFER",

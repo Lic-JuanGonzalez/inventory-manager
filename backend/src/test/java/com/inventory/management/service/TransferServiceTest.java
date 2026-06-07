@@ -60,12 +60,12 @@ class TransferServiceTest {
         TransferRequest saved = TransferRequest.builder()
                 .id(1L).originBranch(origin).destinationBranch(destination)
                 .product(product).quantity(new BigDecimal("10"))
-                .requestedBy(requestUser).status(TransferStatus.PENDIENTE).build();
+                .requestedBy(requestUser).status(TransferStatus.PENDING).build();
         when(transferRepository.save(any())).thenReturn(saved);
 
         TransferResponse response = transferService.create(req, requestUser);
 
-        assertThat(response.status()).isEqualTo(TransferStatus.PENDIENTE);
+        assertThat(response.status()).isEqualTo(TransferStatus.PENDING);
         assertThat(response.originBranchId()).isEqualTo(1L);
     }
 
@@ -75,7 +75,7 @@ class TransferServiceTest {
 
         assertThatThrownBy(() -> transferService.create(req, requestUser))
                 .isInstanceOf(BusinessException.class)
-                .hasMessageContaining("diferentes");
+                .hasMessageContaining("different");
     }
 
     @Test
@@ -97,14 +97,14 @@ class TransferServiceTest {
         TransferRequest transfer = TransferRequest.builder()
                 .id(1L).originBranch(origin).destinationBranch(destination)
                 .product(product).quantity(BigDecimal.TEN)
-                .requestedBy(requestUser).status(TransferStatus.PENDIENTE).build();
+                .requestedBy(requestUser).status(TransferStatus.PENDING).build();
 
         when(transferRepository.findById(1L)).thenReturn(Optional.of(transfer));
         when(transferRepository.save(any())).thenReturn(transfer);
 
         TransferResponse response = transferService.approve(1L, approver);
 
-        assertThat(transfer.getStatus()).isEqualTo(TransferStatus.APROBADA);
+        assertThat(transfer.getStatus()).isEqualTo(TransferStatus.APPROVED);
         assertThat(transfer.getApprovedBy()).isEqualTo(approver);
     }
 
@@ -113,7 +113,7 @@ class TransferServiceTest {
         TransferRequest transfer = TransferRequest.builder()
                 .id(1L).originBranch(origin).destinationBranch(destination)
                 .product(product).quantity(BigDecimal.TEN)
-                .requestedBy(requestUser).status(TransferStatus.APROBADA).build();
+                .requestedBy(requestUser).status(TransferStatus.APPROVED).build();
 
         when(transferRepository.findById(1L)).thenReturn(Optional.of(transfer));
 

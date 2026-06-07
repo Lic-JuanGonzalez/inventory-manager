@@ -58,7 +58,7 @@ public class Inventory {
     public void subtractStock(BigDecimal quantity) {
         BigDecimal result = this.currentStock.subtract(quantity);
         if (result.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalStateException("Stock insuficiente. Stock actual: " + this.currentStock);
+            throw new IllegalStateException("Insufficient stock. Current stock: " + this.currentStock);
         }
         this.currentStock = result;
     }

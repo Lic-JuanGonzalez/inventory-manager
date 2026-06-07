@@ -42,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - HikariCP connection pool (max 20)
 - REST API endpoints: `/api/auth`, `/api/users`, `/api/branches`, `/api/products`, `/api/inventory`, `/api/transfers`, `/api/audit`, `/api/dashboard`
 - Inter-branch transfer workflow with 5-state lifecycle: `PENDING → APPROVED/REJECTED → IN_TRANSIT → COMPLETED`
-- Inventory movement tracking with typed reasons (`COMPRA`, `VENTA`, `AJUSTE`, `TRANSFERENCIA`, `DEVOLUCION`, `MERMA`)
+- Inventory movement tracking with typed reasons (`PURCHASE`, `SALE`, `POSITIVE_ADJUSTMENT`, `NEGATIVE_ADJUSTMENT`, `TRANSFER_INBOUND`, `TRANSFER_OUTBOUND`, `RETURN_INBOUND`, `LOSS`)
 - Async audit logging via `@EnableAsync`
 - RFC 7807 ProblemDetail error responses
 - Springdoc OpenAPI (Swagger UI) at `/api/swagger-ui.html`
