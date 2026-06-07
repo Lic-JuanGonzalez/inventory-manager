@@ -200,8 +200,8 @@ GET    /api/audit               Audit logs [ADMIN/AUDITOR]
 
 ```bash
 # 1. Clone
-git clone <repo-url>
-cd <repo-name>
+git clone https://github.com/Lic-JuanGonzalez/inventory-manager.git
+cd inventory-manager
 
 # 2. Configure environment
 cp .env.example .env
