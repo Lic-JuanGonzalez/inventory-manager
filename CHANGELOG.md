@@ -37,8 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Stateless JWT authentication with access tokens (15 min) and rotating refresh tokens (7 days)
 - Role-based access control: `ADMIN`, `OPERATOR`, `AUDITOR`
 - Domain entities: `User`, `Branch`, `Product`, `ProductCategory`, `Inventory`, `InventoryMovement`, `TransferRequest`, `AuditLog`, `RefreshToken`, `Role`
-- Custom PostgreSQL ENUMs: `movement_type`, `movement_reason`, `transfer_status`
-- Flyway migrations: V1 schema creation, V2 seed data (3 roles, 5 branches, 5 products, admin user)
+- VARCHAR columns for movement type/reason and transfer status (no PostgreSQL custom ENUMs)
+- Flyway migrations: V1 schema, V2 seed data (3 roles, 5 branches, 5 products, admin user)
 - HikariCP connection pool (max 20)
 - REST API endpoints: `/api/auth`, `/api/users`, `/api/branches`, `/api/products`, `/api/inventory`, `/api/transfers`, `/api/audit`, `/api/dashboard`
 - Inter-branch transfer workflow with 5-state lifecycle: `PENDING → APPROVED/REJECTED → IN_TRANSIT → COMPLETED`

@@ -1,77 +1,77 @@
 -- ============================================================
--- V2: Datos iniciales del sistema
+-- V2: Initial seed data
 -- ============================================================
 
 -- Roles
 INSERT INTO roles (name, description) VALUES
-    ('ADMIN',    'Administrador del sistema con acceso total'),
-    ('OPERATOR', 'Operador de sucursal: ingresos, egresos y consultas'),
-    ('AUDITOR',  'Auditor: solo lectura de movimientos y reportes');
+    ('ADMIN',    'System administrator with full access'),
+    ('OPERATOR', 'Branch operator: inbound, outbound, and queries'),
+    ('AUDITOR',  'Auditor: read-only access to movements and reports');
 
--- Categorías de productos
+-- Product categories
 INSERT INTO product_categories (name, description) VALUES
-    ('Electrónicos',   'Dispositivos y equipos electrónicos'),
-    ('Oficina',        'Suministros y equipos de oficina'),
-    ('Limpieza',       'Productos de limpieza e higiene'),
-    ('Herramientas',   'Herramientas y equipos de trabajo'),
-    ('Computación',    'Equipos y accesorios de computación');
+    ('Electronics', 'Electronic devices and equipment'),
+    ('Office',      'Office supplies and equipment'),
+    ('Cleaning',    'Cleaning and hygiene products'),
+    ('Tools',       'Work tools and equipment'),
+    ('Computing',   'Computing equipment and accessories');
 
--- Usuario administrador inicial
--- Contraseña: Admin@1234 (BCrypt hash)
+-- Initial admin user
+-- Password: Admin@1234 (BCrypt cost 12)
 INSERT INTO users (name, last_name, email, password, role_id, active)
-SELECT 'Admin', 'Sistema',
+SELECT 'Admin', 'System',
        'admin@inventory.com',
        '$2a$12$dMIg/wlW4HeBGVKsz2z1mu8FIHaEUHqtOTeFX5Wvw/2w//9FiQ6wu',
        r.id, TRUE
 FROM roles r WHERE r.name = 'ADMIN';
 
--- Sucursales de ejemplo
+-- Sample branches
 INSERT INTO branches (name, address, phone, email, active) VALUES
-    ('Sucursal Central',   'Av. Principal 100, Centro',          '555-0100', 'central@empresa.com',   TRUE),
-    ('Sucursal Norte',     'Calle Norte 250, Zona Norte',        '555-0101', 'norte@empresa.com',     TRUE),
-    ('Sucursal Sur',       'Av. Sur 500, Zona Sur',              '555-0102', 'sur@empresa.com',       TRUE),
-    ('Sucursal Este',      'Boulevard Este 300, Zona Este',      '555-0103', 'este@empresa.com',      TRUE),
-    ('Sucursal Oeste',     'Calle Poniente 150, Zona Oeste',     '555-0104', 'oeste@empresa.com',     FALSE);
+    ('Central Branch', 'Main Ave. 100, Center',       '555-0100', 'central@company.com', TRUE),
+    ('North Branch',   'North St. 250, North Zone',   '555-0101', 'north@company.com',   TRUE),
+    ('South Branch',   'South Ave. 500, South Zone',  '555-0102', 'south@company.com',   TRUE),
+    ('East Branch',    'East Blvd. 300, East Zone',   '555-0103', 'east@company.com',    TRUE),
+    ('West Branch',    'West St. 150, West Zone',     '555-0104', 'west@company.com',    FALSE);
 
--- Productos de ejemplo
+-- Sample products
 INSERT INTO products (sku, name, description, category_id, unit_of_measure, reference_price, active)
-SELECT 'LAP-001', 'Laptop Dell Inspiron 15', 'Laptop 15" Intel Core i5, 8GB RAM, 256GB SSD',
-       c.id, 'UNIDAD', 8500.00, TRUE
-FROM product_categories c WHERE c.name = 'Computación';
-
-INSERT INTO products (sku, name, description, category_id, unit_of_measure, reference_price, active)
-SELECT 'MON-001', 'Monitor Samsung 24"', 'Monitor Full HD 24 pulgadas, panel IPS',
-       c.id, 'UNIDAD', 3200.00, TRUE
-FROM product_categories c WHERE c.name = 'Computación';
+SELECT 'LAP-001', 'Dell Inspiron 15 Laptop', 'Laptop 15" Intel Core i5, 8GB RAM, 256GB SSD',
+       c.id, 'UNIT', 8500.00, TRUE
+FROM product_categories c WHERE c.name = 'Computing';
 
 INSERT INTO products (sku, name, description, category_id, unit_of_measure, reference_price, active)
-SELECT 'TEC-001', 'Teclado Mecánico Logitech', 'Teclado mecánico inalámbrico con retroiluminación',
-       c.id, 'UNIDAD', 1200.00, TRUE
-FROM product_categories c WHERE c.name = 'Computación';
+SELECT 'MON-001', 'Samsung 24" Monitor', '24-inch Full HD monitor, IPS panel',
+       c.id, 'UNIT', 3200.00, TRUE
+FROM product_categories c WHERE c.name = 'Computing';
 
 INSERT INTO products (sku, name, description, category_id, unit_of_measure, reference_price, active)
-SELECT 'PAP-001', 'Resma de Papel A4', 'Resma 500 hojas, 75 gramos, color blanco',
-       c.id, 'RESMA', 85.00, TRUE
-FROM product_categories c WHERE c.name = 'Oficina';
+SELECT 'TEC-001', 'Logitech Mechanical Keyboard', 'Wireless mechanical keyboard with backlight',
+       c.id, 'UNIT', 1200.00, TRUE
+FROM product_categories c WHERE c.name = 'Computing';
 
 INSERT INTO products (sku, name, description, category_id, unit_of_measure, reference_price, active)
-SELECT 'SIL-001', 'Silla Ergonómica', 'Silla de oficina con soporte lumbar ajustable',
-       c.id, 'UNIDAD', 2800.00, TRUE
-FROM product_categories c WHERE c.name = 'Oficina';
+SELECT 'PAP-001', 'A4 Paper Ream', '500 sheets, 75 grams, white',
+       c.id, 'REAM', 85.00, TRUE
+FROM product_categories c WHERE c.name = 'Office';
 
--- Inventario inicial (stock en sucursales activas)
+INSERT INTO products (sku, name, description, category_id, unit_of_measure, reference_price, active)
+SELECT 'SIL-001', 'Ergonomic Chair', 'Office chair with adjustable lumbar support',
+       c.id, 'UNIT', 2800.00, TRUE
+FROM product_categories c WHERE c.name = 'Office';
+
+-- Initial inventory (stock in active branches)
 INSERT INTO inventory (product_id, branch_id, current_stock, min_stock, max_stock)
 SELECT p.id, b.id,
        CASE
-           WHEN p.sku = 'LAP-001' AND b.name = 'Sucursal Central' THEN 15
-           WHEN p.sku = 'LAP-001' AND b.name = 'Sucursal Norte'   THEN 8
-           WHEN p.sku = 'LAP-001' AND b.name = 'Sucursal Sur'     THEN 3
-           WHEN p.sku = 'MON-001' AND b.name = 'Sucursal Central' THEN 25
-           WHEN p.sku = 'MON-001' AND b.name = 'Sucursal Norte'   THEN 12
-           WHEN p.sku = 'TEC-001' AND b.name = 'Sucursal Central' THEN 30
-           WHEN p.sku = 'PAP-001' AND b.name = 'Sucursal Central' THEN 200
-           WHEN p.sku = 'PAP-001' AND b.name = 'Sucursal Norte'   THEN 100
-           WHEN p.sku = 'SIL-001' AND b.name = 'Sucursal Central' THEN 10
+           WHEN p.sku = 'LAP-001' AND b.name = 'Central Branch' THEN 15
+           WHEN p.sku = 'LAP-001' AND b.name = 'North Branch'   THEN 8
+           WHEN p.sku = 'LAP-001' AND b.name = 'South Branch'   THEN 3
+           WHEN p.sku = 'MON-001' AND b.name = 'Central Branch' THEN 25
+           WHEN p.sku = 'MON-001' AND b.name = 'North Branch'   THEN 12
+           WHEN p.sku = 'TEC-001' AND b.name = 'Central Branch' THEN 30
+           WHEN p.sku = 'PAP-001' AND b.name = 'Central Branch' THEN 200
+           WHEN p.sku = 'PAP-001' AND b.name = 'North Branch'   THEN 100
+           WHEN p.sku = 'SIL-001' AND b.name = 'Central Branch' THEN 10
            ELSE 0
        END,
        CASE
@@ -94,9 +94,9 @@ FROM products p
 CROSS JOIN branches b
 WHERE b.active = TRUE
 AND (
-    (p.sku = 'LAP-001' AND b.name IN ('Sucursal Central','Sucursal Norte','Sucursal Sur')) OR
-    (p.sku = 'MON-001' AND b.name IN ('Sucursal Central','Sucursal Norte')) OR
-    (p.sku = 'TEC-001' AND b.name = 'Sucursal Central') OR
-    (p.sku = 'PAP-001' AND b.name IN ('Sucursal Central','Sucursal Norte')) OR
-    (p.sku = 'SIL-001' AND b.name = 'Sucursal Central')
+    (p.sku = 'LAP-001' AND b.name IN ('Central Branch', 'North Branch', 'South Branch')) OR
+    (p.sku = 'MON-001' AND b.name IN ('Central Branch', 'North Branch')) OR
+    (p.sku = 'TEC-001' AND b.name = 'Central Branch') OR
+    (p.sku = 'PAP-001' AND b.name IN ('Central Branch', 'North Branch')) OR
+    (p.sku = 'SIL-001' AND b.name = 'Central Branch')
 );
