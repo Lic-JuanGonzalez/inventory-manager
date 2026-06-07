@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,10 +27,12 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ProductController.class)
+@MockBean(JpaMetamodelMappingContext.class)
 @ActiveProfiles("test")
 class ProductControllerTest {
 
@@ -46,9 +49,16 @@ class ProductControllerTest {
 
     @BeforeEach
     void setUp() {
+        com.inventory.management.domain.entity.User adminUser =
+                com.inventory.management.domain.entity.User.builder()
+                        .id(1L).name("Admin").lastName("Test").email("admin@test.com")
+                        .password("hash").active(true)
+                        .role(com.inventory.management.domain.entity.Role.builder()
+                                .name(RoleType.ADMIN).build())
+                        .build();
+        CustomUserDetails principal = new CustomUserDetails(adminUser);
         adminAuth = new UsernamePasswordAuthenticationToken(
-                "admin@test.com", null,
-                List.of(new SimpleGrantedAuthority("ROLE_ADMIN"))
+                principal, null, principal.getAuthorities()
         );
 
         sampleResponse = new ProductResponse(
@@ -83,7 +93,7 @@ class ProductControllerTest {
         when(productService.create(any(), any())).thenReturn(sampleResponse);
 
         mockMvc.perform(post("/products")
-                        .with(authentication(adminAuth))
+                        .with(authentication(adminAuth)).with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isCreated());
@@ -95,15 +105,15 @@ class ProductControllerTest {
                 "", "Name", null, null, "UNIDAD", BigDecimal.ONE);
 
         mockMvc.perform(post("/products")
-                        .with(authentication(adminAuth))
+                        .with(authentication(adminAuth)).with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
-    void findById_withoutAuth_returns403() throws Exception {
+    void findById_withoutAuth_returns401() throws Exception {
         mockMvc.perform(get("/products/1"))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 }
