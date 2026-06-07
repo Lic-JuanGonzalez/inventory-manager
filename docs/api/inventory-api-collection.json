@@ -67,7 +67,7 @@
       "name": "Auth",
       "item": [
         {
-          "name": "Login - Admin exitoso",
+          "name": "Login - Successful Admin",
           "event": [
             {
               "listen": "test",
@@ -75,7 +75,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Contiene tokens y rol ADMIN', () => {",
+                  "pm.test('Contains tokens and ADMIN role', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('accessToken');",
                   "    pm.expect(j).to.have.property('refreshToken');",
@@ -84,7 +84,7 @@
                   "    pm.environment.set('accessToken',  j.accessToken);",
                   "    pm.environment.set('refreshToken', j.refreshToken);",
                   "});",
-                  "pm.test('expiresIn positivo', () => pm.expect(pm.response.json().expiresIn).to.be.above(0));"
+                  "pm.test('expiresIn is positive', () => pm.expect(pm.response.json().expiresIn).to.be.above(0));"
                 ]
               }
             }
@@ -212,7 +212,7 @@
           }
         },
         {
-          "name": "Login - Campos vacios (validacion)",
+          "name": "Login - Empty fields (validation)",
           "event": [
             {
               "listen": "test",
@@ -265,7 +265,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Nuevo accessToken', () => {",
+                  "pm.test('New accessToken', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('accessToken');",
                   "    pm.environment.set('accessToken', j.accessToken);",
@@ -364,7 +364,7 @@
       "name": "Dashboard",
       "item": [
         {
-          "name": "Obtener Dashboard",
+          "name": "Get Dashboard",
           "event": [
             {
               "listen": "test",
@@ -418,7 +418,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Paginado correcto', () => {",
+                  "pm.test('Correct pagination', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('content');",
                   "    pm.expect(j).to.have.property('totalElements');",
@@ -453,7 +453,7 @@
           }
         },
         {
-          "name": "List users - busqueda por nombre",
+          "name": "List users - search by name",
           "event": [
             {
               "listen": "test",
@@ -461,7 +461,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Resultado contiene admin', () => {",
+                  "pm.test('Result contains admin', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j.content.length).to.be.at.least(1);",
                   "});"
@@ -499,7 +499,7 @@
           }
         },
         {
-          "name": "List users - solo activos",
+          "name": "List users - active only",
           "event": [
             {
               "listen": "test",
@@ -507,7 +507,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Todos activos', () => {",
+                  "pm.test('All active', () => {",
                   "    const j = pm.response.json();",
                   "    j.content.forEach(u => pm.expect(u.active).to.be.true);",
                   "});"
@@ -553,7 +553,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Es admin', () => {",
+                  "pm.test('Is admin', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('id');",
                   "    pm.expect(j.email).to.eql('admin@inventory.com');",
@@ -635,7 +635,7 @@
                   "pm.test('User created with ID', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('id');",
-                  "    pm.expect(j.email).to.eql('juan.operador@test.com');",
+                  "    pm.expect(j.email).to.eql('juan.operator@test.com');",
                   "    pm.environment.set('newUserId', String(j.id));",
                   "});"
                 ]
@@ -652,7 +652,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Juan\",\n  \"lastName\": \"Operador\",\n  \"email\": \"juan.operador@test.com\",\n  \"password\": \"Operator1\",\n  \"role\": \"OPERATOR\"\n}",
+              "raw": "{\n  \"name\": \"Juan\",\n  \"lastName\": \"Operator\",\n  \"email\": \"juan.operator@test.com\",\n  \"password\": \"Operator1\",\n  \"role\": \"OPERATOR\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -688,7 +688,7 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 4xx (email duplicado)', () => {",
+                  "pm.test('Status 4xx (duplicate email)', () => {",
                   "    pm.expect(pm.response.code).to.be.oneOf([400, 409]);",
                   "});"
                 ]
@@ -793,9 +793,9 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Nombre actualizado', () => {",
+                  "pm.test('Name updated', () => {",
                   "    const j = pm.response.json();",
-                  "    pm.expect(j.name).to.eql('Juan Actualizado');",
+                  "    pm.expect(j.name).to.eql('Juan Updated');",
                   "});"
                 ]
               }
@@ -811,7 +811,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Juan Actualizado\",\n  \"lastName\": \"Operador\",\n  \"email\": \"juan.operador@test.com\",\n  \"role\": \"OPERATOR\",\n  \"active\": true\n}",
+              "raw": "{\n  \"name\": \"Juan Updated\",\n  \"lastName\": \"Operator\",\n  \"email\": \"juan.operator@test.com\",\n  \"role\": \"OPERATOR\",\n  \"active\": true\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -924,7 +924,7 @@
           }
         },
         {
-          "name": "List products - busqueda",
+          "name": "List products - search",
           "event": [
             {
               "listen": "test",
@@ -932,7 +932,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Encuentra laptop', () => pm.expect(pm.response.json().content.length).to.be.at.least(1));"
+                  "pm.test('Finds laptop', () => pm.expect(pm.response.json().content.length).to.be.at.least(1));"
                 ]
               }
             }
@@ -967,7 +967,7 @@
           }
         },
         {
-          "name": "List products - por categoria",
+          "name": "List products - by category",
           "event": [
             {
               "listen": "test",
@@ -1017,7 +1017,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Tiene campos esperados', () => {",
+                  "pm.test('Has expected fields', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.include.keys('id','sku','name','unitOfMeasure','referencePrice','active');",
                   "});"
@@ -1145,14 +1145,14 @@
           }
         },
         {
-          "name": "Create product - SKU duplicado",
+          "name": "Create product - Duplicate SKU",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 4xx (SKU duplicado)', () => {",
+                  "pm.test('Status 4xx (duplicate SKU)', () => {",
                   "    pm.expect(pm.response.code).to.be.oneOf([400, 409]);",
                   "});"
                 ]
@@ -1198,7 +1198,7 @@
           }
         },
         {
-          "name": "Create product - Datos invalidos",
+          "name": "Create product - Invalid data",
           "event": [
             {
               "listen": "test",
@@ -1257,7 +1257,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Precio actualizado', () => {",
+                  "pm.test('Price updated', () => {",
                   "    pm.expect(pm.response.json().referencePrice).to.eql(149.99);",
                   "});"
                 ]
@@ -1274,7 +1274,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"sku\": \"TEST-API-001\",\n  \"name\": \"API Test Product Actualizado\",\n  \"description\": \"Updated description\",\n  \"categoryId\": 1,\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 149.99\n}",
+              "raw": "{\n  \"sku\": \"TEST-API-001\",\n  \"name\": \"API Test Product Updated\",\n  \"description\": \"Updated description\",\n  \"categoryId\": 1,\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 149.99\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1386,7 +1386,7 @@
           }
         },
         {
-          "name": "List branches activas",
+          "name": "List active branches",
           "event": [
             {
               "listen": "test",
@@ -1394,7 +1394,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Array de activas', () => {",
+                  "pm.test('Array of active', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.be.an('array');",
                   "    j.forEach(b => pm.expect(b.active).to.be.true);",
@@ -1428,7 +1428,7 @@
           }
         },
         {
-          "name": "List branches - busqueda",
+          "name": "List branches - search",
           "event": [
             {
               "listen": "test",
@@ -1436,7 +1436,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Encuentra Central', () => pm.expect(pm.response.json().content.length).to.be.at.least(1));"
+                  "pm.test('Finds Central', () => pm.expect(pm.response.json().content.length).to.be.at.least(1));"
                 ]
               }
             }
@@ -1479,7 +1479,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Tiene campos', () => {",
+                  "pm.test('Has fields', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.include.keys('id','name','address','active');",
                   "});"
@@ -1606,7 +1606,7 @@
           }
         },
         {
-          "name": "Create branch - Datos invalidos",
+          "name": "Create branch - Invalid data",
           "event": [
             {
               "listen": "test",
@@ -1665,7 +1665,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Nombre actualizado', () => {",
+                  "pm.test('Name updated', () => {",
                   "    pm.expect(pm.response.json().name).to.eql('API Test Branch Actualizada');",
                   "});"
                 ]
@@ -1763,7 +1763,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Tiene registros seed', () => {",
+                  "pm.test('Has seed records', () => {",
                   "    pm.expect(pm.response.json().content).to.be.an('array');",
                   "    pm.expect(pm.response.json().totalElements).to.be.at.least(1);",
                   "});"
@@ -1795,7 +1795,7 @@
           }
         },
         {
-          "name": "List inventory - filtrar por sucursal",
+          "name": "List inventory - filter by branch",
           "event": [
             {
               "listen": "test",
@@ -1837,7 +1837,7 @@
           }
         },
         {
-          "name": "List inventory - filtrar por producto",
+          "name": "List inventory - filter by product",
           "event": [
             {
               "listen": "test",
@@ -1879,7 +1879,7 @@
           }
         },
         {
-          "name": "Stock bajo minimo",
+          "name": "Stock below minimum",
           "event": [
             {
               "listen": "test",
@@ -1887,7 +1887,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Es array', () => pm.expect(pm.response.json()).to.be.an('array'));"
+                  "pm.test('Is array', () => pm.expect(pm.response.json()).to.be.an('array'));"
                 ]
               }
             }
@@ -1925,7 +1925,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Inventory inicializado', () => {",
+                  "pm.test('Inventory initialized', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('id');",
                   "    pm.expect(j.currentStock).to.eql(50);",
@@ -1974,14 +1974,14 @@
           }
         },
         {
-          "name": "Initialize inventory - ya existe",
+          "name": "Initialize inventory - already exists",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 4xx (ya inicializado)', () => {",
+                  "pm.test('Status 4xx (already initialized)', () => {",
                   "    pm.expect(pm.response.code).to.be.oneOf([400, 409, 422]);",
                   "});"
                 ]
@@ -2036,7 +2036,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Tipo INBOUND', () => {",
+                  "pm.test('Type INBOUND', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j.type).to.eql('INBOUND');",
                   "    pm.expect(j.reason).to.eql('PURCHASE');",
@@ -2086,7 +2086,7 @@
           }
         },
         {
-          "name": "Movement - INBOUND (DEVOLUCION)",
+          "name": "Movement - INBOUND (RETURN)",
           "event": [
             {
               "listen": "test",
@@ -2094,7 +2094,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Tipo INBOUND devolucion', () => {",
+                  "pm.test('Type INBOUND return', () => {",
                   "    pm.expect(pm.response.json().reason).to.eql('RETURN_INBOUND');",
                   "});"
                 ]
@@ -2149,7 +2149,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Tipo OUTBOUND', () => {",
+                  "pm.test('Type OUTBOUND', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j.type).to.eql('OUTBOUND');",
                   "    pm.expect(j.reason).to.eql('SALE');",
@@ -2251,14 +2251,14 @@
           }
         },
         {
-          "name": "Movimiento - Stock insuficiente",
+          "name": "Movement - Insufficient stock",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 4xx (stock insuficiente)', () => {",
+                  "pm.test('Status 4xx (insufficient stock)', () => {",
                   "    pm.expect(pm.response.code).to.be.oneOf([400, 409, 422]);",
                   "});"
                 ]
@@ -2357,7 +2357,7 @@
           }
         },
         {
-          "name": "Listar movimientos",
+          "name": "List movements",
           "event": [
             {
               "listen": "test",
@@ -2365,7 +2365,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Tiene movimientos', () => pm.expect(pm.response.json().totalElements).to.be.at.least(1));"
+                  "pm.test('Has movements', () => pm.expect(pm.response.json().totalElements).to.be.at.least(1));"
                 ]
               }
             }
@@ -2395,7 +2395,7 @@
           }
         },
         {
-          "name": "Listar movimientos - filtrar INBOUND",
+          "name": "List movements - filter INBOUND",
           "event": [
             {
               "listen": "test",
@@ -2403,7 +2403,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Solo INBOUND', () => {",
+                  "pm.test('Only INBOUND', () => {",
                   "    pm.response.json().content.forEach(m => pm.expect(m.type).to.eql('INBOUND'));",
                   "});"
                 ]
@@ -2441,7 +2441,7 @@
           }
         },
         {
-          "name": "Listar movimientos - filtrar por sucursal",
+          "name": "List movements - filter by branch",
           "event": [
             {
               "listen": "test",
@@ -2497,7 +2497,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Paginado', () => pm.expect(pm.response.json()).to.have.property('content'));"
+                  "pm.test('Paginated', () => pm.expect(pm.response.json()).to.have.property('content'));"
                 ]
               }
             }
@@ -2526,7 +2526,7 @@
           }
         },
         {
-          "name": "List transfers - filtrar por estado",
+          "name": "List transfers - filter by status",
           "event": [
             {
               "listen": "test",
@@ -2568,7 +2568,7 @@
           }
         },
         {
-          "name": "List transfers pendientes",
+          "name": "List pending transfers",
           "event": [
             {
               "listen": "test",
@@ -2576,7 +2576,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Es array', () => pm.expect(pm.response.json()).to.be.an('array'));"
+                  "pm.test('Is array', () => pm.expect(pm.response.json()).to.be.an('array'));"
                 ]
               }
             }
@@ -2606,7 +2606,7 @@
           }
         },
         {
-          "name": "Create transfer (ciclo completo)",
+          "name": "Create transfer (full cycle)",
           "event": [
             {
               "listen": "test",
@@ -2634,7 +2634,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"originBranchId\": 1,\n  \"destinationBranchId\": 2,\n  \"productId\": 1,\n  \"quantity\": 2,\n  \"notes\": \"Transferencia test ciclo completo\"\n}",
+              "raw": "{\n  \"originBranchId\": 1,\n  \"destinationBranchId\": 2,\n  \"productId\": 1,\n  \"quantity\": 2,\n  \"notes\": \"Transfer test full cycle\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2663,7 +2663,7 @@
           }
         },
         {
-          "name": "Create transfer (para cancelar)",
+          "name": "Create transfer (to cancel)",
           "event": [
             {
               "listen": "test",
@@ -2671,7 +2671,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 201', () => pm.response.to.have.status(201));",
-                  "pm.test('Guarda cancelTransferId', () => {",
+                  "pm.test('Stores cancelTransferId', () => {",
                   "    pm.environment.set('cancelTransferId', String(pm.response.json().id));",
                   "});"
                 ]
@@ -2688,7 +2688,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"originBranchId\": 1,\n  \"destinationBranchId\": 3,\n  \"productId\": 2,\n  \"quantity\": 1,\n  \"notes\": \"Transferencia para cancelar\"\n}",
+              "raw": "{\n  \"originBranchId\": 1,\n  \"destinationBranchId\": 3,\n  \"productId\": 2,\n  \"quantity\": 1,\n  \"notes\": \"Transfer to cancel\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2717,14 +2717,14 @@
           }
         },
         {
-          "name": "Create transfer - misma sucursal",
+          "name": "Create transfer - same branch",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 4xx (misma sucursal)', () => {",
+                  "pm.test('Status 4xx (same branch)', () => {",
                   "    pm.expect(pm.response.code).to.be.oneOf([400, 409, 422]);",
                   "});"
                 ]
@@ -2770,14 +2770,14 @@
           }
         },
         {
-          "name": "Create transfer - stock insuficiente",
+          "name": "Create transfer - insufficient stock",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 4xx (stock insuficiente)', () => {",
+                  "pm.test('Status 4xx (insufficient stock)', () => {",
                   "    pm.expect(pm.response.code).to.be.oneOf([400, 409, 422]);",
                   "});"
                 ]
@@ -2831,7 +2831,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('ID coincide', () => {",
+                  "pm.test('ID matches', () => {",
                   "    pm.expect(String(pm.response.json().id)).to.eql(pm.environment.get('transferId'));",
                   "});"
                 ]
@@ -2980,7 +2980,7 @@
           }
         },
         {
-          "name": "Cancelar transferencia (ya recibida - debe fallar)",
+          "name": "Cancel transfer (already received - must fail)",
           "event": [
             {
               "listen": "test",
@@ -3064,7 +3064,7 @@
       "name": "Audit",
       "item": [
         {
-          "name": "List audit logs de auditoria",
+          "name": "List audit logs",
           "event": [
             {
               "listen": "test",
@@ -3072,7 +3072,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Tiene logs', () => {",
+                  "pm.test('Has logs', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('content');",
                   "    pm.expect(j.totalElements).to.be.at.least(1);",
@@ -3105,7 +3105,7 @@
           }
         },
         {
-          "name": "Audit - filtrar por accion CREATE",
+          "name": "Audit - filter by action CREATE",
           "event": [
             {
               "listen": "test",
@@ -3147,7 +3147,7 @@
           }
         },
         {
-          "name": "Audit - filtrar por entidad Product",
+          "name": "Audit - filter by entity Product",
           "event": [
             {
               "listen": "test",
@@ -3189,7 +3189,7 @@
           }
         },
         {
-          "name": "Audit - filtrar por usuario",
+          "name": "Audit - filter by user",
           "event": [
             {
               "listen": "test",
@@ -3231,7 +3231,7 @@
           }
         },
         {
-          "name": "Audit - rango de fechas",
+          "name": "Audit - date range",
           "event": [
             {
               "listen": "test",
@@ -3282,15 +3282,15 @@
       "name": "Security - Authorization",
       "item": [
         {
-          "name": "Sin token - debe retornar 401",
+          "name": "No token - must return 401",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 401 sin token', () => pm.response.to.have.status(401));",
-                  "pm.test('Body JSON con detail', () => {",
+                  "pm.test('Status 401 no token', () => pm.response.to.have.status(401));",
+                  "pm.test('Body JSON with detail', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j).to.have.property('detail');",
                   "});"
@@ -3315,14 +3315,14 @@
           }
         },
         {
-          "name": "Token invalido - debe retornar 401",
+          "name": "Invalid token - must return 401",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 401 token invalido', () => pm.response.to.have.status(401));"
+                  "pm.test('Status 401 invalid token', () => pm.response.to.have.status(401));"
                 ]
               }
             }
@@ -3403,7 +3403,7 @@
           "response": []
         },
         {
-          "name": "Login como OPERATOR (para tests 403)",
+          "name": "Login as OPERATOR (for 403 tests)",
           "event": [
             {
               "listen": "test",
@@ -3411,7 +3411,7 @@
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200', () => pm.response.to.have.status(200));",
-                  "pm.test('Rol OPERATOR', () => {",
+                  "pm.test('Role OPERATOR', () => {",
                   "    const j = pm.response.json();",
                   "    pm.expect(j.role).to.eql('OPERATOR');",
                   "    pm.environment.set('operatorToken', j.accessToken);",
@@ -3453,14 +3453,14 @@
           }
         },
         {
-          "name": "OPERATOR accede /users - debe retornar 403",
+          "name": "OPERATOR accesses /users - must return 403",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 403 (OPERATOR sin permiso en /users)', () => pm.response.to.have.status(403));"
+                  "pm.test('Status 403 (OPERATOR no permission on /users)', () => pm.response.to.have.status(403));"
                 ]
               }
             }
@@ -3489,14 +3489,14 @@
           }
         },
         {
-          "name": "OPERATOR crea producto - debe retornar 403",
+          "name": "OPERATOR creates product - must return 403",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 403 (OPERATOR sin permiso en POST /products)', () => pm.response.to.have.status(403));"
+                  "pm.test('Status 403 (OPERATOR no permission on POST /products)', () => pm.response.to.have.status(403));"
                 ]
               }
             }
@@ -3521,7 +3521,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"sku\": \"OP-TEST\",\n  \"name\": \"Producto no autorizado\",\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 10.00\n}",
+              "raw": "{\n  \"sku\": \"OP-TEST\",\n  \"name\": \"Unauthorized product\",\n  \"unitOfMeasure\": \"UNIDAD\",\n  \"referencePrice\": 10.00\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -3540,14 +3540,14 @@
           }
         },
         {
-          "name": "OPERATOR accede /audit - debe retornar 403",
+          "name": "OPERATOR accesses /audit - must return 403",
           "event": [
             {
               "listen": "test",
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('Status 403 (OPERATOR sin permiso en /audit)', () => pm.response.to.have.status(403));"
+                  "pm.test('Status 403 (OPERATOR no permission on /audit)', () => pm.response.to.have.status(403));"
                 ]
               }
             }
