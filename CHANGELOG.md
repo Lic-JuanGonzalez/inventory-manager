@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-06-07
+
+### Changed
+
+#### Backend
+- Translated all user-facing string literals to English: exception messages, validation errors, service layer strings (`ResourceNotFoundException`, `InsufficientStockException`, `AuthService`, `BranchService`, `ProductService`, `UserService`, `UserDetailsServiceImpl`)
+- Translated 401/403 inline JSON responses in `SecurityConfig` (`"No autenticado"` → `"Unauthenticated"`, `"Acceso denegado"` → `"Access denied"`)
+- Translated all Swagger/OpenAPI annotations (`@Tag`, `@Operation`) across all 8 controllers
+- Renamed all enum values to English: `MovementType` (INBOUND/OUTBOUND), `TransferStatus` (PENDING/APPROVED/IN_TRANSIT/RECEIVED/CANCELLED), `MovementReason` (PURCHASE/SALE/LOSS/RETURN_INBOUND/TRANSFER_INBOUND/TRANSFER_OUTBOUND/POSITIVE_ADJUSTMENT/NEGATIVE_ADJUSTMENT)
+
+#### Frontend
+- Translated entire UI to English across 17 components: navigation labels, page titles, column headers, dialog titles, form labels, validation messages, tooltips, placeholders, button text, status chips, and filter controls
+
+#### Database
+- Consolidated Flyway migrations: rewrote V1 (schema) and V2 (seed data) as clean authoritative English baseline; deleted patch migrations V3–V5
+- Seed data translated to English: branch names, product names, categories, role descriptions
+
+#### Docs
+- API collection (`docs/api/inventory-api-collection.json`): translated all 76 request names, folder names, test assertion labels, and request body strings to English; expanded from 62 to 76 requests
+- Collection test assertions aligned with actual API responses (422 for validation errors, correct field names, `include.keys` for partial object checks)
+- Added security test flow: dedicated OPERATOR user creation before 403 authorization tests
+- README updated with Apidog import instructions and Newman one-liner
+
+### Fixed
+
+#### Tests
+- `ProductControllerTest`: added `@MockBean(JpaMetamodelMappingContext.class)` to resolve `@WebMvcTest` + `@EnableJpaAuditing` context loading failure
+- `ProductControllerTest`: use `CustomUserDetails` as auth principal so `@AuthenticationPrincipal` injection works correctly
+- `ProductControllerTest`: added `.with(csrf())` to POST requests; updated unauthenticated test to expect 401
+
 ## [1.1.0] - 2026-06-05
 
 ### Fixed
