@@ -12,9 +12,23 @@
 .DS_Store
 Thumbs.db
 
-# Docker volumes / override
+# Docker
 docker-compose.override.yml
+
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+.mvn/wrapper/maven-wrapper.jar
+
+# Frontend
+node_modules/
+frontend/dist/
 
 # Logs
 *.log
 logs/
+
+# Misc
+squashfs-root/

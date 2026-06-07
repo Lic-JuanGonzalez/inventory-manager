@@ -189,43 +189,53 @@ GET    /api/audit               Audit logs [ADMIN/AUDITOR]
 
 ## Quick Start
 
+### Prerequisites
+
+| Option | Requirements |
+|--------|-------------|
+| Docker (recommended) | [Docker](https://docs.docker.com/get-docker/) + [Docker Compose](https://docs.docker.com/compose/install/) |
+| Local | Java 21+, Maven 3.9+, Node 20+, PostgreSQL 16 |
+
 ### Option 1: Docker Compose (recommended)
 
 ```bash
-# Clone and configure variables
+# 1. Clone
+git clone <repo-url>
+cd <repo-name>
+
+# 2. Configure environment
 cp .env.example .env
 
-# Start all services
+# 3. Build and start all services
 docker compose up --build
-
-# View logs
-docker compose logs -f backend
 
 # Frontend:  http://localhost
 # Backend:   http://localhost:8080/api
 # Swagger:   http://localhost:8080/api/swagger-ui.html
 ```
 
+**Default login:** `admin@inventory.com` / `Admin@1234`
+
 ### Option 2: Local Development
 
-**Prerequisites:** Java 21+, Maven 3.9+, Node 20+, PostgreSQL 16
-
 ```bash
-# Database
+# Database (PostgreSQL must be running)
 createdb inventory_db
-createuser inventory_user
 
 # Backend
 cd backend
-export DB_HOST=localhost DB_USER=inventory_user DB_PASSWORD=inventory_pass
+export DB_HOST=localhost DB_USER=postgres DB_PASSWORD=postgres
 mvn spring-boot:run
+# API at http://localhost:8080/api
 
 # Frontend (new terminal)
 cd frontend
 npm install
 npm run dev
-# Available at http://localhost:5173
+# UI at http://localhost:5173
 ```
+
+**Default login:** `admin@inventory.com` / `Admin@1234`
 
 ---
 
