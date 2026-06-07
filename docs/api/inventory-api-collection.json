@@ -3279,7 +3279,7 @@
       ]
     },
     {
-      "name": "Security - Autorizacion",
+      "name": "Security - Authorization",
       "item": [
         {
           "name": "Sin token - debe retornar 401",
