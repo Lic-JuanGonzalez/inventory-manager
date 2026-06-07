@@ -237,7 +237,53 @@ npm run dev
 
 ---
 
-## Tests
+## API Testing with Apidog
+
+Two files ready to import under `docs/api/`:
+
+| File | Purpose |
+|------|---------|
+| `inventory-api-collection.json` | 76 requests with automated test scripts (Postman v2.1) |
+| `local-environment.json` | Environment variables for local development |
+| `openapi.json` | Full OpenAPI 3 spec (import for schema explorer) |
+
+### Import collection + environment
+
+1. Open Apidog → **Import** → **Postman**
+2. Select `docs/api/inventory-api-collection.json`
+3. **Manage Environments** → **Import** → select `docs/api/local-environment.json`
+4. Set active environment to **Inventory System - Local**
+
+### Import OpenAPI spec
+
+1. Open Apidog → **Import** → **OpenAPI / Swagger**
+2. Select `docs/api/openapi.json`
+
+> The spec is generated from the running backend. To refresh it:
+> ```bash
+> curl -s http://localhost:8080/api/v3/api-docs > docs/api/openapi.json
+> ```
+
+### Run full test suite
+
+Requires clean database — test data is not idempotent (unique emails, SKUs, branch names):
+
+```bash
+# Reset DB and start services
+docker compose down -v && docker compose up -d postgres backend
+
+# Wait for backend to be healthy, then run via Newman (no global install):
+npx newman run docs/api/inventory-api-collection.json \
+  --environment docs/api/local-environment.json
+
+# Expected: 76 requests, 118 assertions, 0 failures
+```
+
+In Apidog, select the collection and click **Run** → **Run All** with the local environment active.
+
+---
+
+## Unit Tests
 
 ```bash
 cd backend

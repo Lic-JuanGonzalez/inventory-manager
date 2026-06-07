@@ -1,0 +1,67 @@
+{
+  "id": "inventory-local-env",
+  "name": "Inventory System - Local",
+  "_postman_variable_scope": "environment",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api",
+      "enabled": true,
+      "type": "default"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "enabled": true,
+      "type": "any"
+    },
+    {
+      "key": "refreshToken",
+      "value": "",
+      "enabled": true,
+      "type": "any"
+    },
+    {
+      "key": "operatorToken",
+      "value": "",
+      "enabled": true,
+      "type": "any"
+    },
+    {
+      "key": "newUserId",
+      "value": "",
+      "enabled": true,
+      "type": "any"
+    },
+    {
+      "key": "newProductId",
+      "value": "",
+      "enabled": true,
+      "type": "any"
+    },
+    {
+      "key": "newBranchId",
+      "value": "",
+      "enabled": true,
+      "type": "any"
+    },
+    {
+      "key": "transferId",
+      "value": "",
+      "enabled": true,
+      "type": "any"
+    },
+    {
+      "key": "cancelTransferId",
+      "value": "",
+      "enabled": true,
+      "type": "any"
+    },
+    {
+      "key": "secOpId",
+      "value": "",
+      "enabled": true,
+      "type": "any"
+    }
+  ]
+}
